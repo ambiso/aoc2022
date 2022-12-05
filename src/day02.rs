@@ -228,7 +228,6 @@ pub fn solve_b_opt() -> Result<i64> {
             + (u8x32::from(d2s) - u8x32::splat('X' as u8));
         let vals = __m256i::from(vals);
         let scores = unsafe { _mm256_shuffle_epi8(simd_lut, vals) };
-        // dbg!(u8x32::from(simd_lut), u8x32::from(vals), u8x32::from(scores));
         score += u8x32::from(scores).reduce_sum() as i64 + 32;
     }
     let rem = chunks.remainder();
