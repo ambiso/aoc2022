@@ -1,4 +1,6 @@
 #![feature(portable_simd)]
+#![feature(allocator_api)]
+#![feature(ptr_as_uninit)]
 
 mod day01;
 mod day02;
@@ -35,7 +37,7 @@ fn main() -> Result<()> {
 
     let solutions: Vec<Vec<Box<dyn Fn() -> Box<dyn Debug>>>> = vec![
         dynfns!(day01::solve_a),
-        dynfns!(day02::solve_a, day02::solve_b, day02::solve_b_opt),
+        dynfns!(day02::solve_a, day02::solve_b, day02::solve_b_opt, day02::solve_b_opt_2),
         dynfns!(day03::solve_a, day03::solve_b),
         dynfns!(day04::solve_a),
         dynfns!(day05::solve_a, day05::solve_b),
