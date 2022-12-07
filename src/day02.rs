@@ -163,7 +163,7 @@ pub fn solve_a() -> Result<()> {
             Outcome::Lose => 0,
         } + what_score(mine);
     }
-    println!("{}", score);
+    // println!("{}", score);
     Ok(())
 }
 
@@ -191,22 +191,7 @@ pub fn gen_input_day2() -> Result<()> {
 
 pub fn solve_b_opt() -> Result<i64> {
     let mut score = 0i64;
-    let tic = Instant::now();
-    let f = fs::File::open("inputs/day02g")?;
-    let n = f.metadata()?.len() as usize;
-    // let mut v = Vec::with_capacity(n);
-    let a = std::alloc::System;
-    let layout = Layout::from_size_align(n, 32)?;
-    let v = a.allocate(layout)?;
-    // v.resize(n, 0);
-    // f.read_exact(&mut v)?;
-    let fd = nix::fcntl::open("inputs/day02g", OFlag::O_RDONLY, Mode::empty())?;
-    let v = unsafe { std::mem::transmute::<_, &mut [u8]>(v.as_uninit_slice_mut()) };
-    nix::unistd::read(fd, v)?;
-
-    // let v = fs::read("inputs/day02g")?;
-    let read_elapsed = tic.elapsed();
-    let tic = Instant::now();
+    let v = fs::read("inputs/day02a")?;
     let lut = [
         2, 3, 7, 0, 4, 8, 1, 5, 6, 0, 0, 0, 0, 0, 0, 0, 2, 3, 7, 0, 4, 8, 1, 5, 6, 0, 0, 0, 0, 0,
         0, 0,
@@ -255,16 +240,12 @@ pub fn solve_b_opt() -> Result<i64> {
         let d2 = rem[l * 4 + 2] - 'X' as u8;
         score += lut[(d1 * 3 + d2) as usize] as i64 + 1;
     }
-    let compute_elapsed = tic.elapsed();
-    println!("Read:    {:10}µs", read_elapsed.as_micros());
-    println!("Compute: {:10}µs", compute_elapsed.as_micros());
     Ok(score)
 }
 
 pub fn solve_b_opt_2() -> Result<i64> {
     let mut score = 0i64;
-    let v = fs::read("inputs/day02g")?;
-    let tic = Instant::now();
+    let v = fs::read("inputs/day02a")?;
     let lut = [
         2, 3, 7, 0, 4, 8, 1, 5, 6, 
     ];
@@ -273,6 +254,5 @@ pub fn solve_b_opt_2() -> Result<i64> {
         let d2 = v[l * 4 + 2] - 'X' as u8;
         score += lut[(d1 * 3 + d2) as usize] as i64 + 1;
     }
-    println!("{}µs", tic.elapsed().as_micros());
     Ok(score)
 }

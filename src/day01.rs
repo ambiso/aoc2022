@@ -18,8 +18,8 @@ pub fn solve_a() -> Result<()> {
         }
     }
     insert(&mut top_s, s);
-    println!("{}", top_s[0]);
-    println!("{}", top_s[1..].iter().sum::<i64>());
-    println!("{:?}", top_s.as_slice());
+    // println!("{}", top_s[0]);
+    // println!("{}", top_s[1..].iter().sum::<i64>());
+    // println!("{:?}", top_s.as_slice());
     Ok(())
 }
