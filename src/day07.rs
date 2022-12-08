@@ -148,15 +148,13 @@ pub fn solve_a() -> Result<u64> {
     let s = read_string("inputs/day07a")?;
     let tree = parse_tree(&s);
     let mut dir_sizes = 0;
-    walk_dirs(&tree, &mut |n| {
-        match n {
-            FsNode::Dir(size, _) => {
-                if *size <= 100000 {
-                    dir_sizes += size;
-                }
-            },
-            _ => {},
+    walk_dirs(&tree, &mut |n| match n {
+        FsNode::Dir(size, _) => {
+            if *size <= 100000 {
+                dir_sizes += size;
+            }
         }
+        _ => {}
     });
 
     Ok(dir_sizes)
@@ -165,12 +163,12 @@ pub fn solve_a() -> Result<u64> {
 fn walk_dirs(node: &FsNode, f: &mut impl FnMut(&FsNode) -> ()) {
     f(node);
     match node {
-        FsNode::File(_) => {},
+        FsNode::File(_) => {}
         FsNode::Dir(_size, tree) => {
             for (_, n) in tree {
                 walk_dirs(n, f);
             }
-        },
+        }
     }
 }
 
@@ -219,17 +217,14 @@ pub fn solve_b() -> Result<u64> {
     let needed = needed - unused;
     let mut smallest_dir = u64::MAX;
 
-    walk_dirs(&tree, &mut |node| {
-        match node {
-            FsNode::Dir(size, _) => {
-                if *size >= needed {
-                    smallest_dir = smallest_dir.min(*size);
-                }
-            },
-            _ => {},
+    walk_dirs(&tree, &mut |node| match node {
+        FsNode::Dir(size, _) => {
+            if *size >= needed {
+                smallest_dir = smallest_dir.min(*size);
+            }
         }
+        _ => {}
     });
 
     Ok(smallest_dir)
-
 }
