@@ -7,8 +7,8 @@ edition = "2021"
 
 [dependencies]
 nix = { version = "0.26.1", features = ["fs"] }
+nom = "7.1.1"
 rand = "0.8.5"
-regex = "1.7.0"
 
 
 # [profile.release]

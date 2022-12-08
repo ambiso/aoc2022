@@ -15,8 +15,8 @@ pub fn solve_a() -> Result<u32> {
     let mut s = 0;
     for l in read_string("inputs/day03a")?.lines() {
         let l = l.as_bytes();
-        let left = &l[..l.len()/2];
-        let right = &l[l.len()/2..];
+        let left = &l[..l.len() / 2];
+        let right = &l[l.len() / 2..];
         let intersection = item_set(left) & item_set(right);
         s += intersection.trailing_zeros();
     }

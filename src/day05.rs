@@ -24,9 +24,7 @@ use crate::{error::Result, util::read_string};
 //     Ok((input, (letter, number.parse().unwrap())))
 // }
 
-
-pub fn solve_a() -> Result<String>{
-    
+pub fn solve_a() -> Result<String> {
     let mut stacks = Vec::new();
 
     let s = read_string("inputs/day05a")?;
@@ -63,18 +61,20 @@ pub fn solve_a() -> Result<String>{
         let to: usize = s[5].parse()?;
 
         for _ in 0..n {
-            let lift = stacks[from-1].pop().unwrap();
-            stacks[to-1].push(lift);
+            let lift = stacks[from - 1].pop().unwrap();
+            stacks[to - 1].push(lift);
         }
     }
-    Ok(stacks.iter().map(|x| x.last().unwrap_or(&(' ' as u8))).fold("".to_string(), |mut a, x| {
-        a.push(*x as char);
-        a
-    }))
+    Ok(stacks
+        .iter()
+        .map(|x| x.last().unwrap_or(&(' ' as u8)))
+        .fold("".to_string(), |mut a, x| {
+            a.push(*x as char);
+            a
+        }))
 }
 
-pub fn solve_b() -> Result<String>{
-    
+pub fn solve_b() -> Result<String> {
     let mut stacks = Vec::new();
 
     let s = read_string("inputs/day05a")?;
@@ -110,13 +110,16 @@ pub fn solve_b() -> Result<String>{
         let from: usize = s[3].parse()?;
         let to: usize = s[5].parse()?;
 
-        let fsl = stacks[from-1].len();
-        let chunk = Vec::from(&stacks[from-1][fsl-n..]);
-        stacks[to-1].extend(chunk);
-        stacks[from-1].truncate(fsl-n);
+        let fsl = stacks[from - 1].len();
+        let chunk = Vec::from(&stacks[from - 1][fsl - n..]);
+        stacks[to - 1].extend(chunk);
+        stacks[from - 1].truncate(fsl - n);
     }
-    Ok(stacks.iter().map(|x| x.last().unwrap_or(&(' ' as u8))).fold("".to_string(), |mut a, x| {
-        a.push(*x as char);
-        a
-    }))
+    Ok(stacks
+        .iter()
+        .map(|x| x.last().unwrap_or(&(' ' as u8)))
+        .fold("".to_string(), |mut a, x| {
+            a.push(*x as char);
+            a
+        }))
 }

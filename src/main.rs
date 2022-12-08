@@ -2,6 +2,8 @@
 #![feature(allocator_api)]
 #![feature(ptr_as_uninit)]
 
+use std::collections::btree_map::BTreeMap;
+
 mod day01;
 mod day02;
 mod day03;
@@ -21,21 +23,41 @@ use crate::error::Result;
 
 macro_rules! dynfn {
     ($x:expr) => {
-        Box::new(|| Box::new($x()))
+        Box::new(|| Box::new($x()) as Box<dyn Debug>) as Box<dyn Fn() -> Box<dyn Debug>>
+    };
+}
+
+macro_rules! dynfns_impl {
+    ($m:expr, $x:expr) => {
+        $m.insert(std::stringify!($x), dynfn!($x));
+    };
+    ($m:expr, $x:expr, $($y:expr),+) => {
+        {
+            $m.insert(std::stringify!($x), dynfn!($x));
+            dynfns_impl!($m, $($y),+);
+        }
     };
 }
 
 macro_rules! dynfns {
     ($x:expr) => {
-        vec![dynfn!($x)]
+        {
+            let mut m = BTreeMap::new();
+            m.insert(std::stringify!($x), dynfn!($x));
+            m
+        }
     };
     ($x:expr, $($y:expr),+) => {
-        vec![dynfn!($x),$(dynfn!($y)),+]
+        {
+        let mut m = BTreeMap::new();
+        dynfns_impl!(m, $x, $($y),+);
+        m
+        }
     };
 }
 
 fn main() -> Result<()> {
-    let solutions: Vec<Vec<Box<dyn Fn() -> Box<dyn Debug>>>> = vec![
+    let solutions: Vec<BTreeMap<_, Box<dyn Fn() -> Box<dyn Debug>>>> = vec![
         dynfns!(day01::solve_a),
         dynfns!(
             day02::solve_a,
@@ -47,7 +69,7 @@ fn main() -> Result<()> {
         dynfns!(day04::solve_a),
         dynfns!(day05::solve_a, day05::solve_b),
         dynfns!(day06::solve_a, day06::solve_b),
-        dynfns!(day07::solve_a),
+        dynfns!(day07::solve_a, day07::solve_b),
     ];
 
     let mut args = std::env::args();
@@ -56,24 +78,22 @@ fn main() -> Result<()> {
     if which == "all" {
         let mut total = Duration::ZERO;
         let n = 10000;
-        for j in 0..n {
-            for (i, day) in solutions.iter().enumerate() {
-                if j == 0 {
-                println!("Day {}", i + 1);
-                }
-                for solution in day {
-                    let tic = Instant::now();
+        println!("Samples: {n}");
+        for (i, day) in solutions.iter().enumerate() {
+            println!("Day {}", i + 1);
+            for (name, solution) in day {
+                let tic = Instant::now();
+                for _ in 0..n {
                     solution();
-                    let elapsed = tic.elapsed();
-                    total += elapsed;
-                    if j == 0 {
-                    println!("Computed in {}µs", elapsed.as_nanos() as f64 / 1000.0);
-                    }
                 }
-                if j == 0 {
-                println!("");
-                }
+                let elapsed = tic.elapsed();
+                total += elapsed;
+                println!(
+                    "{name} computed in {}µs",
+                    elapsed.as_nanos() as f64 / 1000.0 / n as f64
+                );
             }
+            println!("");
         }
 
         println!("Total: {}µs", total.as_nanos() as f64 / 1000.0 / n as f64);
@@ -82,8 +102,9 @@ fn main() -> Result<()> {
     let which: usize = which.parse()?;
     let which_sub: usize = args.next().unwrap_or("0".to_string()).parse()?;
 
+    let (_, f) = solutions[which - 1].iter().nth(which_sub).unwrap();
     let tic = Instant::now();
-    let res = solutions[which - 1][which_sub]();
+    let res = f();
     let elapsed = tic.elapsed();
     println!("Result: {:?}", res);
     println!("Computed in {}µs", elapsed.as_nanos() as f64 / 1000.0);

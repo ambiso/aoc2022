@@ -1,14 +1,10 @@
 use crate::error::Result;
 use crate::util::read_string;
-use nix::fcntl::OFlag;
-use nix::sys::stat::Mode;
 use rand::distributions::Uniform;
 use rand::Rng;
-use std::alloc::{Allocator, Layout};
 use std::arch::x86_64::{__m256i, _mm256_shuffle_epi8};
 use std::fs;
 use std::simd::{u8x32, SimdUint};
-use std::time::Instant;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum RPS {
@@ -140,7 +136,7 @@ pub fn gen_lut() {
     }
 }
 
-pub fn solve_a() -> Result<()> {
+pub fn solve_a() -> Result<i64> {
     let mut score = 0;
     for l in read_string("inputs/day02a")?.lines() {
         let mut s = l.chars();
@@ -163,8 +159,7 @@ pub fn solve_a() -> Result<()> {
             Outcome::Lose => 0,
         } + what_score(mine);
     }
-    // println!("{}", score);
-    Ok(())
+    Ok(score)
 }
 
 #[allow(unused)]
@@ -246,9 +241,7 @@ pub fn solve_b_opt() -> Result<i64> {
 pub fn solve_b_opt_2() -> Result<i64> {
     let mut score = 0i64;
     let v = fs::read("inputs/day02a")?;
-    let lut = [
-        2, 3, 7, 0, 4, 8, 1, 5, 6, 
-    ];
+    let lut = [2, 3, 7, 0, 4, 8, 1, 5, 6];
     for l in 0..v.len() / 4 {
         let d1 = v[l * 4] - 'A' as u8;
         let d2 = v[l * 4 + 2] - 'X' as u8;
