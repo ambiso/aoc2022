@@ -126,12 +126,9 @@ fn solve<const N: usize>() -> Result<usize> {
                     loop {
                         let dx = h_pos.0 - t_pos.0;
                         let dy = h_pos.1 - t_pos.1;
-                        if dx.abs() >= 2 && h_pos.1 == t_pos.1 {
+                        if dx.abs() >= 2 || dy.abs() >= 2 {
                             t_pos.0 += dx.signum();
-                        } else if dy.abs() >= 2 && h_pos.0 == t_pos.0 {
                             t_pos.1 += dy.signum();
-                        } else if dx.abs() + dy.abs() >= 3 {
-                            *t_pos = addp(*t_pos, (dx.signum(), dy.signum()));
                         } else {
                             break;
                         }
@@ -167,6 +164,6 @@ mod test {
 
     #[test]
     fn test_b() {
-        assert_eq!(solve_b().unwrap(), 410400);
+        assert_eq!(solve_b().unwrap(), 2793);
     }
 }
