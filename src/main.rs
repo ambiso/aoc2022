@@ -12,6 +12,7 @@ mod day05;
 mod day06;
 mod day07;
 mod day08;
+mod day09;
 mod error;
 mod util;
 
@@ -72,6 +73,7 @@ fn main() -> Result<()> {
         dynfns!(day06::solve_a, day06::solve_b),
         dynfns!(day07::solve_a, day07::solve_b),
         dynfns!(day08::solve_a, day08::solve_b, day08::solve_a_opt),
+        dynfns!(day09::solve_a, day09::solve_b),
     ];
 
     let mut args = std::env::args();
@@ -83,7 +85,10 @@ fn main() -> Result<()> {
         let which: Vec<_> = if which[0] == "all" {
             (0..solutions.len()).collect()
         } else {
-            which.iter().filter_map(|x| x.parse::<usize>().ok().map(|x| x-1)).collect()
+            which
+                .iter()
+                .filter_map(|x| x.parse::<usize>().ok().map(|x| x - 1))
+                .collect()
         };
         let mut total = Duration::ZERO;
         let n = 10000;

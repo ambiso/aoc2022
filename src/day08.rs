@@ -118,12 +118,12 @@ pub fn solve_a_opt() -> Result<u64> {
 
     for x in 0..xm {
         visible += do_scan(&v, &mut vis, x, 0, 0, 1);
-        visible += do_scan(&v, &mut vis, x, xm-1, 0, -1);
+        visible += do_scan(&v, &mut vis, x, xm - 1, 0, -1);
     }
 
     for y in 0..ym {
         visible += do_scan(&v, &mut vis, 0, y, 1, 0);
-        visible += do_scan(&v, &mut vis, ym-1, y, -1, 0);
+        visible += do_scan(&v, &mut vis, ym - 1, y, -1, 0);
     }
 
     Ok(visible)
@@ -172,7 +172,6 @@ pub fn solve_b() -> Result<i64> {
 //         v: vec![-1i8; (xm * ym) as usize],
 //         stride: xm,
 //     }).collect();
-
 
 //     for x in 0..xm {
 //         do_scan_b(&v, &mut maps, x, 0, 0, 1);
