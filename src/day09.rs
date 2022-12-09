@@ -95,50 +95,49 @@ fn parse_lines<T>(
 }
 
 #[derive(Debug)]
-struct State {
-    h_pos: (i64, i64),
-    t_pos: (i64, i64),
+struct State<const N: usize> {
+    pos: [(i64, i64); N],
     visited: HashSet<(i64, i64)>,
 }
 
-pub fn solve_a() -> Result<usize> {
+fn solve<const N: usize>() -> Result<usize> {
     let f = std::fs::read("inputs/day09a")?;
 
     let (_, state) = parse_lines(
         &f,
         || State {
-            h_pos: (0, 0),
-            t_pos: (0, 0),
-            visited: HashSet::new(),
+            pos: [(0, 0); N],
+            visited: {
+                let mut m = HashSet::new();
+                m.insert((0, 0));
+                m
+            },
         },
         |mut state, line| {
-            state.visited.insert(state.t_pos);
             let dh = line.dir.into();
 
             for _ in 0..line.steps {
-                state.h_pos = addp(state.h_pos, dh);
+                state.pos[0] = addp(state.pos[0], dh);
 
-                let mut dx = state.h_pos.0 - state.t_pos.0;
-                if dx.abs() == 2 && state.h_pos.1 == state.t_pos.1 {
-                    state.t_pos.0 += 1 * dx.signum();
-                }
+                for i in 1..state.pos.len() {
+                    let h_pos = state.pos[i-1];
+                    let t_pos = &mut state.pos[i];
 
-                let mut dy = state.h_pos.1 - state.t_pos.1;
-                if dy.abs() == 2 && state.h_pos.0 == state.t_pos.0 {
-                    state.t_pos.1 += 1 * dy.signum();
-                }
-
-                if dx.abs() + dy.abs() == 3 {
-                    if dx.abs() == 2 {
-                        dx /= 2;
+                    loop {
+                        let dx = h_pos.0 - t_pos.0;
+                        let dy = h_pos.1 - t_pos.1;
+                        if dx.abs() >= 2 && h_pos.1 == t_pos.1 {
+                            t_pos.0 += dx.signum();
+                        } else if dy.abs() >= 2 && h_pos.0 == t_pos.0 {
+                            t_pos.1 += dy.signum();
+                        } else if dx.abs() + dy.abs() >= 3 {
+                            *t_pos = addp(*t_pos, (dx.signum(), dy.signum()));
+                        } else {
+                            break;
+                        }
                     }
-                    if dy.abs() == 2 {
-                        dy /= 2;
-                    }
-
-                    state.t_pos = addp(state.t_pos, (dx, dy));
                 }
-                state.visited.insert(state.t_pos);
+                state.visited.insert(state.pos[state.pos.len()-1]);
             }
 
             state
@@ -146,13 +145,15 @@ pub fn solve_a() -> Result<usize> {
     )
     .unwrap();
 
-    // dbg!(&state);
-
     Ok(state.visited.len())
 }
 
-pub fn solve_b() -> Result<i64> {
-    Ok(0)
+pub fn solve_a() -> Result<usize> {
+    solve::<2>()
+}
+
+pub fn solve_b() -> Result<usize> {
+    solve::<10>()
 }
 
 #[cfg(test)]
