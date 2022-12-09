@@ -73,7 +73,7 @@ fn dominated_by(x: RPS) -> RPS {
 
 pub fn solve_b() -> Result<i64> {
     let mut score = 0;
-    for l in read_string("inputs/day02g")?.lines() {
+    for l in read_string("inputs/day02a")?.lines() {
         let mut s = l.chars();
         let other = convert_other(s.next().unwrap());
         s.next();

@@ -11,6 +11,7 @@ mod day04;
 mod day05;
 mod day06;
 mod day07;
+mod day08;
 mod error;
 mod util;
 
@@ -70,16 +71,25 @@ fn main() -> Result<()> {
         dynfns!(day05::solve_a, day05::solve_b),
         dynfns!(day06::solve_a, day06::solve_b),
         dynfns!(day07::solve_a, day07::solve_b),
+        dynfns!(day08::solve_a, day08::solve_b, day08::solve_a_opt),
     ];
 
     let mut args = std::env::args();
     args.next().unwrap();
     let which = args.next().unwrap_or("1".to_string());
-    if which == "all" {
+    if which == "bench" {
+        let which = args.next().unwrap_or("all".to_string());
+        let which = which.split(",").collect::<Vec<_>>();
+        let which: Vec<_> = if which[0] == "all" {
+            (0..solutions.len()).collect()
+        } else {
+            which.iter().filter_map(|x| x.parse::<usize>().ok().map(|x| x-1)).collect()
+        };
         let mut total = Duration::ZERO;
         let n = 10000;
         println!("Samples: {n}");
-        for (i, day) in solutions.iter().enumerate() {
+        for i in which {
+            let day = &solutions[i];
             println!("Day {}", i + 1);
             for (name, solution) in day {
                 let tic = Instant::now();
