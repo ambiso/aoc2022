@@ -2,7 +2,7 @@ use nom::{
     branch::alt,
     bytes::complete::tag,
     character::complete::{digit1, newline},
-    combinator::{iterator, map, opt},
+    combinator::{iterator, map, opt, ParserIterator},
     sequence::{preceded, terminated, tuple},
     IResult,
 };
@@ -99,7 +99,6 @@ pub fn solve_a() -> Result<i64> {
     let f = std::fs::read("inputs/day10a")?;
 
     let mut s = State { acc: 1 };
-
     let mut pit = iterator(&f[..], parse_line);
     let it = pit.flat_map(|ins| match ins {
         Instruction::Noop => TwoIterable::OneElem(s),
@@ -130,7 +129,108 @@ pub fn solve_a() -> Result<i64> {
     Ok(solution)
 }
 
+// Works with fixed nom
+// fn parse_input(i: &[u8]) -> impl Iterator<Item = State> + '_ {
+//     let mut s = State { acc: 1 };
+//     let mut pit = iterator(i, parse_line);
+//     let it = Iterator::flat_map(pit, move |ins| match ins {
+//         Instruction::Noop => TwoIterable::OneElem(s),
+//         Instruction::Addx(v) => {
+//             let prev_s = s.clone();
+//             s.acc += v;
+//             TwoIterable::TwoElems(prev_s, prev_s)
+//         }
+//     });
+//     it
+// }
+
+use ouroboros::self_referencing;
+
+#[self_referencing]
+struct MyStruct<'a, A: 'a, F>
+where
+    for<'b> &'b mut A: Iterator<Item = Instruction>,
+    F: FnMut(Instruction) -> TwoIterable<State>,
+{
+    parent: A,
+    #[borrows(mut parent)]
+    #[not_covariant]
+    pub iter: std::iter::FlatMap<&'this mut A, TwoIterable<State>, F>,
+    phantom: std::marker::PhantomData<&'a ()>
+}
+
+impl<A, F> Iterator for MyStruct<'_, A, F>
+where
+    for<'a> &'a mut A: Iterator<Item = Instruction>,
+    F: FnMut(Instruction) -> TwoIterable<State>,
+{
+    type Item = State;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.with_iter_mut(|iter| iter.next())
+    }
+}
+
+#[allow(unused)]
+fn parse_input(
+    i: &[u8],
+) -> MyStruct<
+    ParserIterator<
+        &[u8],
+        nom::error::Error<&[u8]>,
+        impl for<'a> Fn(&'a [u8]) -> IResult<&'a [u8], Instruction>,
+    >,
+    impl FnMut(Instruction) -> TwoIterable<State>,
+> {
+    let mut s = State { acc: 1 };
+    let pit = iterator(i, parse_line);
+    MyStructBuilder {
+        parent: pit,
+        iter_builder: |pit: &mut _| {
+            pit.flat_map(move |ins| match ins {
+                Instruction::Noop => TwoIterable::OneElem(s),
+                Instruction::Addx(v) => {
+                    let prev_s = s.clone();
+                    s.acc += v;
+                    TwoIterable::TwoElems(prev_s, prev_s)
+                }
+            })
+        },
+        phantom: Default::default(),
+    }
+    .build()
+}
+
 pub fn solve_b() -> Result<usize> {
+    let f = std::fs::read("inputs/day10a")?;
+
+    let mut s = State { acc: 1 };
+    let mut pit = iterator(&f[..], parse_line);
+    let it = pit.flat_map(|ins| match ins {
+        Instruction::Noop => TwoIterable::OneElem(s),
+        Instruction::Addx(v) => {
+            let prev_s = s.clone();
+            s.acc += v;
+            TwoIterable::TwoElems(prev_s, prev_s)
+        }
+    });
+
+    let mut crt = [false; 40 * 6];
+
+    it.enumerate().for_each(|(i, s)| {
+        let pos = i as i64 % 40;
+        if s.acc == pos || s.acc - 1 == pos || s.acc + 1 == pos {
+            crt[i] = true;
+        }
+    });
+
+    // for y in 0..6 {
+    //     for x in 0..40 {
+    //         print!("{}", if crt[y * 40 + x] { '#' } else { '.' });
+    //     }
+    //     println!("");
+    // }
+
     Ok(0)
 }
 
@@ -145,6 +245,6 @@ mod test {
 
     #[test]
     fn test_b() {
-        assert_eq!(solve_b().unwrap(), 2793);
+        assert_eq!(solve_b().unwrap(), 0);
     }
 }
