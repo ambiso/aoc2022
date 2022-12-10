@@ -120,7 +120,7 @@ fn solve<const N: usize>() -> Result<usize> {
                 state.pos[0] = addp(state.pos[0], dh);
 
                 for i in 1..state.pos.len() {
-                    let h_pos = state.pos[i-1];
+                    let h_pos = state.pos[i - 1];
                     let t_pos = &mut state.pos[i];
 
                     loop {
@@ -134,7 +134,7 @@ fn solve<const N: usize>() -> Result<usize> {
                         }
                     }
                 }
-                state.visited.insert(state.pos[state.pos.len()-1]);
+                state.visited.insert(state.pos[state.pos.len() - 1]);
             }
 
             state
