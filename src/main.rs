@@ -1,6 +1,7 @@
 #![feature(portable_simd)]
 #![feature(allocator_api)]
 #![feature(ptr_as_uninit)]
+#![feature(result_flattening)]
 
 use std::collections::btree_map::BTreeMap;
 
@@ -14,6 +15,7 @@ mod day07;
 mod day08;
 mod day09;
 mod day10;
+mod day11;
 mod error;
 mod util;
 
@@ -76,6 +78,7 @@ fn main() -> Result<()> {
         dynfns!(day08::solve_a, day08::solve_b, day08::solve_a_opt),
         dynfns!(day09::solve_a, day09::solve_b),
         dynfns!(day10::solve_a, day10::solve_b),
+        dynfns!(day11::solve_a, day11::solve_b),
     ];
 
     let mut args = std::env::args();

@@ -2,7 +2,7 @@ use nom::{
     branch::alt,
     bytes::complete::tag,
     character::complete::{digit1, newline},
-    combinator::{iterator, map, opt, ParserIterator},
+    combinator::{iterator, map, opt},
     sequence::{preceded, terminated, tuple},
     IResult,
 };
@@ -114,7 +114,6 @@ pub fn solve_a() -> Result<i64> {
         .filter_map(|(i, x)| {
             let i = i + 1;
             if i >= 20 && (i - 20) % 40 == 0 {
-                // dbg!(i, x);
                 Some(i as i64 * x.acc)
             } else {
                 None
@@ -130,76 +129,75 @@ pub fn solve_a() -> Result<i64> {
 }
 
 // Works with fixed nom
-// fn parse_input(i: &[u8]) -> impl Iterator<Item = State> + '_ {
+// fn parse_input<'a: 'b, 'b>(i: &'a [u8]) -> impl Iterator<Item = State> + 'b {
 //     let mut s = State { acc: 1 };
 //     let mut pit = iterator(i, parse_line);
-//     let it = Iterator::flat_map(pit, move |ins| match ins {
+//     Iterator::flat_map(pit, move |ins| match ins {
 //         Instruction::Noop => TwoIterable::OneElem(s),
 //         Instruction::Addx(v) => {
 //             let prev_s = s.clone();
 //             s.acc += v;
 //             TwoIterable::TwoElems(prev_s, prev_s)
 //         }
-//     });
-//     it
+//     })
 // }
 
-use ouroboros::self_referencing;
+// use ouroboros::self_referencing;
 
-#[self_referencing]
-struct MyStruct<'a, A: 'a, F>
-where
-    for<'b> &'b mut A: Iterator<Item = Instruction>,
-    F: FnMut(Instruction) -> TwoIterable<State>,
-{
-    parent: A,
-    #[borrows(mut parent)]
-    #[not_covariant]
-    pub iter: std::iter::FlatMap<&'this mut A, TwoIterable<State>, F>,
-    phantom: std::marker::PhantomData<&'a ()>
-}
+// #[self_referencing]
+// struct MyStruct<'a, A: 'a, F>
+// where
+//     for<'b> &'b mut A: Iterator<Item = Instruction>,
+//     F: FnMut(Instruction) -> TwoIterable<State>,
+// {
+//     parent: A,
+//     #[borrows(mut parent)]
+//     #[not_covariant]
+//     pub iter: std::iter::FlatMap<&'this mut A, TwoIterable<State>, F>,
+//     phantom: std::marker::PhantomData<&'a ()>
+// }
 
-impl<A, F> Iterator for MyStruct<'_, A, F>
-where
-    for<'a> &'a mut A: Iterator<Item = Instruction>,
-    F: FnMut(Instruction) -> TwoIterable<State>,
-{
-    type Item = State;
+// impl<A, F> Iterator for MyStruct<'_, A, F>
+// where
+//     for<'a> &'a mut A: Iterator<Item = Instruction>,
+//     F: FnMut(Instruction) -> TwoIterable<State>,
+// {
+//     type Item = State;
 
-    fn next(&mut self) -> Option<Self::Item> {
-        self.with_iter_mut(|iter| iter.next())
-    }
-}
+//     fn next(&mut self) -> Option<Self::Item> {
+//         self.with_iter_mut(|iter| iter.next())
+//     }
+// }
 
-#[allow(unused)]
-fn parse_input(
-    i: &[u8],
-) -> MyStruct<
-    ParserIterator<
-        &[u8],
-        nom::error::Error<&[u8]>,
-        impl for<'a> Fn(&'a [u8]) -> IResult<&'a [u8], Instruction>,
-    >,
-    impl FnMut(Instruction) -> TwoIterable<State>,
-> {
-    let mut s = State { acc: 1 };
-    let pit = iterator(i, parse_line);
-    MyStructBuilder {
-        parent: pit,
-        iter_builder: |pit: &mut _| {
-            pit.flat_map(move |ins| match ins {
-                Instruction::Noop => TwoIterable::OneElem(s),
-                Instruction::Addx(v) => {
-                    let prev_s = s.clone();
-                    s.acc += v;
-                    TwoIterable::TwoElems(prev_s, prev_s)
-                }
-            })
-        },
-        phantom: Default::default(),
-    }
-    .build()
-}
+// #[allow(unused)]
+// fn parse_input(
+//     i: &[u8],
+// ) -> MyStruct<
+//     ParserIterator<
+//         &[u8],
+//         nom::error::Error<&[u8]>,
+//         impl for<'a> Fn(&'a [u8]) -> IResult<&'a [u8], Instruction>,
+//     >,
+//     impl FnMut(Instruction) -> TwoIterable<State>,
+// > {
+//     let mut s = State { acc: 1 };
+//     let pit = iterator(i, parse_line);
+//     MyStructBuilder {
+//         parent: pit,
+//         iter_builder: |pit: &mut _| {
+//             pit.flat_map(move |ins| match ins {
+//                 Instruction::Noop => TwoIterable::OneElem(s),
+//                 Instruction::Addx(v) => {
+//                     let prev_s = s.clone();
+//                     s.acc += v;
+//                     TwoIterable::TwoElems(prev_s, prev_s)
+//                 }
+//             })
+//         },
+//         phantom: Default::default(),
+//     }
+//     .build()
+// }
 
 pub fn solve_b() -> Result<usize> {
     let f = std::fs::read("inputs/day10a")?;
