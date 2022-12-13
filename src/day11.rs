@@ -3,14 +3,14 @@ use std::collections::VecDeque;
 use nom::{
     branch::alt,
     bytes::complete::{tag, take_while1},
-    character::complete::{newline, space0, space1},
-    combinator::{eof, iterator, map, all_consuming, opt},
-    multi::{many1, separated_list0},
+    character::complete::{newline, space1},
+    combinator::{all_consuming, map, opt},
+    multi::separated_list0,
     sequence::{delimited, preceded, terminated, tuple},
-    IResult, Finish,
+    Finish, IResult,
 };
 
-use crate::{error::Result, util::{parse_num, gcd}};
+use crate::{error::Result, util::parse_num};
 
 #[derive(Debug)]
 enum Operation {
@@ -106,14 +106,12 @@ fn parse_monkey(i: &[u8]) -> IResult<&[u8], Monkey> {
                 parse_num,
             ),
         )),
-        |(_monkey_id, items, operation, test, action_true, action_false)| {
-            Monkey {
-                items,
-                operation,
-                test,
-                action_true,
-                action_false
-            }
+        |(_monkey_id, items, operation, test, action_true, action_false)| Monkey {
+            items,
+            operation,
+            test,
+            action_true,
+            action_false,
         },
     )(i)
 }
@@ -147,7 +145,7 @@ pub fn solve(n: i64, div_three: bool) -> Result<i64> {
     inspections.sort();
     // print_monkeys(&monkeys);
 
-    Ok(inspections[inspections.len()-1] * inspections[inspections.len() - 2])
+    Ok(inspections[inspections.len() - 1] * inspections[inspections.len() - 2])
 }
 
 pub fn solve_a() -> Result<i64> {
@@ -167,7 +165,7 @@ fn sim_round(monkeys: &mut [Monkey], inspections: &mut [i64], modulus: i64, div_
             let monkey = &mut monkeys[m];
             let mut wl = match monkey.items.pop_front() {
                 Some(x) => x,
-                None => break
+                None => break,
             };
             inspections[m] += 1;
             wl = monkey.operation.eval(wl);
