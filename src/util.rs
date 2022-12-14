@@ -3,6 +3,7 @@ use nom::character::complete::digit1;
 use nom::combinator::{map, opt};
 use nom::sequence::tuple;
 use nom::IResult;
+use std::ops::{Index, IndexMut};
 
 use crate::error::Result;
 use std::fs;
@@ -23,4 +24,29 @@ pub fn parse_num(i: &[u8]) -> IResult<&[u8], i64> {
             acc * if sign.is_some() { -1 } else { 1 }
         },
     )(i)
+}
+
+pub struct Vec2D<T> {
+    pub v: Vec<T>,
+    pub stride: i64,
+}
+
+impl<T> Index<(i64, i64)> for Vec2D<T> {
+    type Output = T;
+
+    fn index(&self, index: (i64, i64)) -> &Self::Output {
+        &self.v[(index.0 + index.1 * self.stride) as usize]
+    }
+}
+
+impl<T> IndexMut<(i64, i64)> for Vec2D<T> {
+    fn index_mut(&mut self, index: (i64, i64)) -> &mut T {
+        &mut self.v[(index.0 + index.1 * self.stride) as usize]
+    }
+}
+
+impl<T> Vec2D<T> {
+    pub fn dims(&self) -> (i64, i64) {
+        (self.stride - 1 as i64, self.v.len() as i64 / self.stride)
+    }
 }

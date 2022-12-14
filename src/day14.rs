@@ -1,9 +1,14 @@
+use std::time::Instant;
+
 use nom::{
     bytes::complete::tag, character::complete::newline, combinator::map, multi::separated_list0,
     sequence::tuple, IResult,
 };
 
-use crate::{error::Result, util::parse_num};
+use crate::{
+    error::Result,
+    util::{parse_num, Vec2D},
+};
 
 fn parse_coord(i: &[u8]) -> IResult<&[u8], (i64, i64)> {
     map(tuple((parse_num, tag(b","), parse_num)), |(a, _, b)| (a, b))(i)
@@ -25,6 +30,21 @@ enum Block {
 }
 
 fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
+    // let min_x = scans
+    //     .iter()
+    //     .flat_map(|s| s.iter().map(|x| x.0).min())
+    //     .min()
+    //     .unwrap();
+    // let max_x = scans
+    //     .iter()
+    //     .flat_map(|s| s.iter().map(|x| x.0).max())
+    //     .max()
+    //     .unwrap();
+    // let min_y = scans
+    //     .iter()
+    //     .flat_map(|s| s.iter().map(|x| x.1).min())
+    //     .min()
+    //     .unwrap();
     let max_y = scans
         .iter()
         .flat_map(|s| s.iter().map(|x| x.1).max())
@@ -39,8 +59,10 @@ fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
         ]);
     }
 
-    let mut grid =
-        vec![vec![Block::Air; (2 + max_y + 2) as usize]; (source.0 + 2 * max_y + 1) as usize];
+    let mut grid = Vec2D {
+        v: vec![Block::Air; ((2 + max_y + 2) * (source.0 + 2 * max_y + 1)) as usize],
+        stride: (2 + max_y + 2),
+    };
 
     for scan in scans {
         for p in scan.windows(2) {
@@ -51,7 +73,7 @@ fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
                     }
 
                     for x in x1..=x2 {
-                        grid[x as usize][y1 as usize] = Block::Rock;
+                        grid[(y1, x)] = Block::Rock;
                     }
                 } else if x1 == x2 {
                     if y2 < y1 {
@@ -59,7 +81,7 @@ fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
                     }
 
                     for y in y1..=y2 {
-                        grid[x1 as usize][y as usize] = Block::Rock;
+                        grid[(y, x1)] = Block::Rock;
                     }
                 } else {
                     panic!()
@@ -70,27 +92,32 @@ fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
         }
     }
 
+    let mut collisions = Vec::with_capacity((max_y + 2) as usize);
+    collisions.push(source);
+
     let mut distributed_sand = 0;
     'outer: loop {
-        let mut sand_pos = source;
-
-        if grid[sand_pos.0 as usize][sand_pos.1 as usize] == Block::Sand {
-            break;
-        }
+        let mut sand_pos = match collisions.last() {
+            Some(x) => *x,
+            None => break,
+        };
 
         loop {
-            if grid[sand_pos.0 as usize][sand_pos.1 as usize + 1] == Block::Air {
-                sand_pos.1 += 1;
-            } else if grid[sand_pos.0 as usize - 1][sand_pos.1 as usize + 1] == Block::Air {
-                sand_pos.1 += 1;
-                sand_pos.0 -= 1;
-            } else if grid[sand_pos.0 as usize + 1][sand_pos.1 as usize + 1] == Block::Air {
-                sand_pos.1 += 1;
-                sand_pos.0 += 1;
-            } else {
-                grid[sand_pos.0 as usize][sand_pos.1 as usize] = Block::Sand;
+            let mut any = false;
+            for dir in [0, -1, 1] {
+                if grid[(sand_pos.1 + 1, sand_pos.0 + dir)] == Block::Air {
+                    sand_pos.1 += 1;
+                    sand_pos.0 += dir;
+                    any = true;
+                    break;
+                }
+            }
+            if !any {
+                grid[(sand_pos.1, sand_pos.0)] = Block::Sand;
+                collisions.pop();
                 break;
             }
+            collisions.push(sand_pos);
             if sand_pos.1 > max_y + 2 {
                 break 'outer;
             }
