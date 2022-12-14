@@ -12,13 +12,13 @@ use nom::{
 
 use crate::{error::Result, util::parse_num};
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 enum Operation {
     Add(Operand, Operand),
     Multiply(Operand, Operand),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 enum Operand {
     Old,
     Const(i64),
@@ -33,7 +33,7 @@ impl Operand {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Monkey {
     items: VecDeque<i64>,
     operation: Operation,
@@ -41,6 +41,14 @@ struct Monkey {
     action_true: i64,
     action_false: i64,
 }
+
+impl PartialEq for Monkey {
+    fn eq(&self, other: &Self) -> bool {
+        self.items == other.items
+    }
+}
+
+impl Eq for Monkey {}
 
 impl Operation {
     fn eval(&self, old: i64) -> i64 {
@@ -123,33 +131,71 @@ fn parse_monkeys(i: &[u8]) -> IResult<&[u8], Vec<Monkey>> {
     ))(i)
 }
 
-pub fn solve(n: i64, div_three: bool) -> Result<i64> {
+pub fn solve<const DIV: bool>(n: i64) -> Result<i64> {
     let f = std::fs::read("inputs/day11a")?;
 
-    let mut monkeys = parse_monkeys(&f[..]).finish().unwrap().1;
-    let mut inspections = vec![0; monkeys.len()];
-    let modulus: i64 = monkeys.iter().map(|x| x.test).product::<i64>();
+    let monkeys = parse_monkeys(&f[..]).finish().unwrap().1;
 
-    for _ in 0..n {
-        // print_monkeys(&monkeys);
-        // println!("");
-        sim_round(&mut monkeys, &mut inspections, modulus, div_three);
-        // if [1, 20, 1000].contains(&(i+1)) {
-        //     println!("== After round {} ==", i+1);
-        //     for (i, ins) in inspections.iter().enumerate() {
-        //         println!("Monkey {i} inspected items {ins} times.");
-        //     }
-        //     println!("");
-        // }
+    let mut tortoise = monkeys.clone();
+    let mut hare = monkeys.clone();
+    let mut inspections_tortoise = vec![0; tortoise.len()];
+    let mut inspections_hare = vec![0; hare.len()];
+    let modulus: i64 = tortoise.iter().map(|x| x.test).product();
+
+    sim_round::<DIV>(&mut tortoise, &mut inspections_tortoise, modulus);
+    sim_round::<DIV>(&mut hare, &mut inspections_hare, modulus);
+    sim_round::<DIV>(&mut hare, &mut inspections_hare, modulus);
+    while tortoise != hare {
+        sim_round::<DIV>(&mut tortoise, &mut inspections_tortoise, modulus);
+        sim_round::<DIV>(&mut hare, &mut inspections_hare, modulus);
+        sim_round::<DIV>(&mut hare, &mut inspections_hare, modulus);
     }
-    inspections.sort();
-    // print_monkeys(&monkeys);
 
-    Ok(inspections[inspections.len() - 1] * inspections[inspections.len() - 2])
+    let mut mu = 0;
+    tortoise = monkeys.clone();
+    inspections_tortoise = vec![0; tortoise.len()];
+
+    while tortoise != hare {
+        sim_round::<DIV>(&mut tortoise, &mut inspections_tortoise, modulus);
+        sim_round::<DIV>(&mut hare, &mut inspections_hare, modulus);
+        mu += 1;
+    }
+
+    let mut lam = 1;
+    hare = tortoise.clone();
+    inspections_hare = vec![0; hare.len()];
+    sim_round::<DIV>(&mut hare, &mut inspections_hare, modulus);
+    while tortoise != hare {
+        sim_round::<DIV>(&mut hare, &mut inspections_hare, modulus);
+        lam += 1;
+    }
+
+    let n = n - mu;
+    let skipped_cycles = n / lam;
+    let skipped_iters = skipped_cycles * lam;
+    inspections_tortoise.iter_mut().zip(inspections_hare.iter()).for_each(|(x, y)| *x += *y * skipped_cycles);
+    let iters_left = n - skipped_iters;
+    for _ in 0..iters_left {
+        sim_round::<DIV>(&mut tortoise, &mut inspections_tortoise, modulus);
+    }
+
+    inspections_tortoise.sort();
+
+    Ok(inspections_tortoise[inspections_tortoise.len() - 1] * inspections_tortoise[inspections_tortoise.len() - 2])
 }
 
 pub fn solve_a() -> Result<i64> {
-    solve(20, true)
+    let f = std::fs::read("inputs/day11a")?;
+    let mut monkeys = parse_monkeys(&f[..]).finish().unwrap().1;
+    let mut inspections = vec![0; monkeys.len()];
+    let modulus: i64 = monkeys.iter().map(|x| x.test).product();
+
+    for _ in 0..20 {
+        sim_round::<true>(&mut monkeys, &mut inspections, modulus);
+    }
+
+    inspections.sort();
+    Ok(inspections[inspections.len() - 1] * inspections[inspections.len() - 2])
 }
 
 #[allow(unused)]
@@ -159,7 +205,7 @@ fn print_monkeys(monkeys: &[Monkey]) {
     }
 }
 
-fn sim_round(monkeys: &mut [Monkey], inspections: &mut [i64], modulus: i64, div_three: bool) {
+fn sim_round<const DIV: bool>(monkeys: &mut [Monkey], inspections: &mut [i64], modulus: i64) {
     for m in 0..monkeys.len() {
         loop {
             let monkey = &mut monkeys[m];
@@ -169,7 +215,7 @@ fn sim_round(monkeys: &mut [Monkey], inspections: &mut [i64], modulus: i64, div_
             };
             inspections[m] += 1;
             wl = monkey.operation.eval(wl);
-            if div_three {
+            if DIV {
                 wl /= 3;
             }
             wl %= modulus;
@@ -186,7 +232,7 @@ fn sim_round(monkeys: &mut [Monkey], inspections: &mut [i64], modulus: i64, div_
 }
 
 pub fn solve_b() -> Result<i64> {
-    solve(10000, false)
+    solve::<false>(10000)
 }
 
 #[cfg(test)]

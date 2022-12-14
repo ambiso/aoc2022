@@ -1,0 +1,1850 @@
+<&T as core::fmt::Debug>::fmt:
+        push    rax
+        mov     rax, rsi
+        mov     rcx, qword ptr [rdi]
+        cmp     qword ptr [rcx], 0
+        je      .LBB0_2
+        add     rcx, 8
+        mov     qword ptr [rsp], rcx
+        lea     rsi, [rip + .L__unnamed_1]
+        lea     r8, [rip + .L__unnamed_2]
+        mov     rcx, rsp
+        mov     edx, 5
+        mov     rdi, rax
+        call    qword ptr [rip + core::fmt::Formatter::debug_tuple_field1_finish@GOTPCREL]
+        pop     rcx
+        ret
+.LBB0_2:
+        lea     rsi, [rip + .L__unnamed_3]
+        mov     edx, 3
+        mov     rdi, rax
+        pop     rax
+        jmp     qword ptr [rip + _ZN4core3fmt9Formatter9write_str17h57528041899d3afeE@GOTPCREL]
+
+<&T as core::fmt::Debug>::fmt:
+        push    rbp
+        push    r15
+        push    r14
+        push    r13
+        push    r12
+        push    rbx
+        sub     rsp, 24
+        mov     rbx, qword ptr [rdi]
+        lea     rdi, [rsp + 8]
+        call    qword ptr [rip + core::fmt::Formatter::debug_list@GOTPCREL]
+        mov     rdx, qword ptr [rbx + 24]
+        test    rdx, rdx
+        je      .LBB1_1
+        mov     rcx, qword ptr [rbx]
+        mov     rax, qword ptr [rbx + 16]
+        xor     esi, esi
+        cmp     rax, rcx
+        cmovae  rsi, rcx
+        sub     rax, rsi
+        mov     rdi, rcx
+        sub     rdi, rax
+        mov     rsi, rdx
+        sub     rsi, rdi
+        ja      .LBB1_4
+        add     rdx, rax
+        xor     esi, esi
+        mov     rcx, rdx
+        jmp     .LBB1_4
+.LBB1_1:
+        xor     eax, eax
+        xor     ecx, ecx
+        xor     esi, esi
+.LBB1_4:
+        mov     r15, qword ptr [rbx + 8]
+        lea     r13, [r15 + 8*rax]
+        lea     r14, [r15 + 8*rcx]
+        lea     rax, [r15 + 8*rsi]
+        mov     r12, rsp
+        mov     rbp, qword ptr [rip + core::fmt::builders::DebugList::entry@GOTPCREL]
+        jmp     .LBB1_5
+.LBB1_6:
+        mov     rbx, r13
+        mov     r13, rax
+.LBB1_9:
+        mov     qword ptr [rsp], rbx
+        add     rbx, 8
+        lea     rdi, [rsp + 8]
+        mov     rsi, r12
+        lea     rdx, [rip + .L__unnamed_2]
+        call    rbp
+        mov     rax, r13
+        mov     r13, rbx
+.LBB1_5:
+        cmp     r13, r14
+        jne     .LBB1_6
+        test    r15, r15
+        je      .LBB1_10
+        mov     rbx, r15
+        mov     r14, rax
+        cmp     r15, rax
+        mov     r15, r13
+        jne     .LBB1_9
+.LBB1_10:
+        lea     rdi, [rsp + 8]
+        call    qword ptr [rip + core::fmt::builders::DebugList::finish@GOTPCREL]
+        add     rsp, 24
+        pop     rbx
+        pop     r12
+        pop     r13
+        pop     r14
+        pop     r15
+        pop     rbp
+        ret
+
+<&T as core::fmt::Debug>::fmt:
+        push    r14
+        push    rbx
+        push    rax
+        mov     rbx, rsi
+        mov     r14, qword ptr [rdi]
+        mov     rdi, rsi
+        call    qword ptr [rip + core::fmt::Formatter::debug_lower_hex@GOTPCREL]
+        test    al, al
+        je      .LBB2_1
+        mov     rdi, r14
+        mov     rsi, rbx
+        add     rsp, 8
+        pop     rbx
+        pop     r14
+        jmp     qword ptr [rip + _ZN4core3fmt3num53_$LT$impl$u20$core..fmt..LowerHex$u20$for$u20$i64$GT$3fmt17h9a0f7a2c8585d3fcE@GOTPCREL]
+.LBB2_1:
+        mov     rdi, rbx
+        call    qword ptr [rip + core::fmt::Formatter::debug_upper_hex@GOTPCREL]
+        mov     rdi, r14
+        mov     rsi, rbx
+        add     rsp, 8
+        test    al, al
+        je      .LBB2_4
+        pop     rbx
+        pop     r14
+        jmp     qword ptr [rip + _ZN4core3fmt3num53_$LT$impl$u20$core..fmt..UpperHex$u20$for$u20$i64$GT$3fmt17hd1721bdafef41c5cE@GOTPCREL]
+.LBB2_4:
+        pop     rbx
+        pop     r14
+        jmp     qword ptr [rip + _ZN4core3fmt3num3imp52_$LT$impl$u20$core..fmt..Display$u20$for$u20$i64$GT$3fmt17h7c15a870761244a4E@GOTPCREL]
+
+<&T as core::fmt::Debug>::fmt:
+        sub     rsp, 24
+        mov     rax, rsi
+        mov     rcx, qword ptr [rdi]
+        cmp     qword ptr [rcx], 0
+        je      .LBB3_1
+        lea     rdx, [rcx + 8]
+        mov     qword ptr [rsp + 8], rdx
+        add     rcx, 24
+        mov     qword ptr [rsp + 16], rcx
+        lea     r8, [rip + .L__unnamed_4]
+        mov     qword ptr [rsp], r8
+        lea     rsi, [rip + .L__unnamed_5]
+        lea     rcx, [rsp + 8]
+        lea     r9, [rsp + 16]
+        mov     edx, 8
+        jmp     .LBB3_3
+.LBB3_1:
+        lea     rdx, [rcx + 8]
+        mov     qword ptr [rsp + 8], rdx
+        add     rcx, 24
+        mov     qword ptr [rsp + 16], rcx
+        lea     r8, [rip + .L__unnamed_4]
+        mov     qword ptr [rsp], r8
+        lea     rsi, [rip + .L__unnamed_6]
+        lea     rcx, [rsp + 8]
+        lea     r9, [rsp + 16]
+        mov     edx, 3
+.LBB3_3:
+        mov     rdi, rax
+        call    qword ptr [rip + core::fmt::Formatter::debug_tuple_field2_finish@GOTPCREL]
+        add     rsp, 24
+        ret
+
+core::ptr::drop_in_place<&i64>:
+        ret
+
+core::ptr::drop_in_place<alloc::vec::Vec<i64>>:
+        mov     rsi, qword ptr [rdi]
+        test    rsi, rsi
+        je      .LBB5_1
+        shl     rsi, 3
+        mov     rdi, qword ptr [rdi + 8]
+        mov     edx, 8
+        jmp     qword ptr [rip + __rust_dealloc@GOTPCREL]
+.LBB5_1:
+        ret
+
+core::ptr::drop_in_place<alloc::vec::Vec<example::Monkey>>:
+        push    r15
+        push    r14
+        push    r13
+        push    r12
+        push    rbx
+        mov     r14, rdi
+        mov     rax, qword ptr [rdi + 16]
+        test    rax, rax
+        je      .LBB6_5
+        mov     r12, qword ptr [r14 + 8]
+        shl     rax, 5
+        lea     r15, [rax + 2*rax]
+        xor     ebx, ebx
+        mov     r13, qword ptr [rip + __rust_dealloc@GOTPCREL]
+        jmp     .LBB6_2
+.LBB6_4:
+        add     rbx, 96
+        cmp     r15, rbx
+        je      .LBB6_5
+.LBB6_2:
+        mov     rsi, qword ptr [r12 + rbx]
+        test    rsi, rsi
+        je      .LBB6_4
+        shl     rsi, 3
+        mov     rdi, qword ptr [r12 + rbx + 8]
+        mov     edx, 8
+        call    r13
+        jmp     .LBB6_4
+.LBB6_5:
+        mov     rax, qword ptr [r14]
+        test    rax, rax
+        je      .LBB6_6
+        shl     rax, 5
+        lea     rsi, [rax + 2*rax]
+        mov     rdi, qword ptr [r14 + 8]
+        mov     edx, 8
+        pop     rbx
+        pop     r12
+        pop     r13
+        pop     r14
+        pop     r15
+        jmp     qword ptr [rip + __rust_dealloc@GOTPCREL]
+.LBB6_6:
+        pop     rbx
+        pop     r12
+        pop     r13
+        pop     r14
+        pop     r15
+        ret
+
+core::ptr::drop_in_place<alloc::vec::Vec<alloc::slice::merge_sort::Run>>:
+        mov     rsi, qword ptr [rdi]
+        test    rsi, rsi
+        je      .LBB7_1
+        shl     rsi, 4
+        mov     rdi, qword ptr [rdi + 8]
+        mov     edx, 8
+        jmp     qword ptr [rip + __rust_dealloc@GOTPCREL]
+.LBB7_1:
+        ret
+
+alloc::collections::vec_deque::VecDeque<T,A>::grow:
+        push    r15
+        push    r14
+        push    rbx
+        mov     rbx, rdi
+        mov     r14, qword ptr [rdi]
+        mov     rsi, r14
+        call    alloc::raw_vec::RawVec<T,A>::reserve_for_push
+        mov     rcx, qword ptr [rbx + 16]
+        mov     rdx, qword ptr [rbx + 24]
+        mov     rax, r14
+        sub     rax, rdx
+        cmp     rcx, rax
+        jbe     .LBB8_4
+        mov     r15, qword ptr [rbx]
+        mov     rax, r14
+        sub     rax, rcx
+        sub     rdx, rax
+        cmp     rax, rdx
+        jbe     .LBB8_3
+        mov     rsi, r15
+        sub     rsi, r14
+        cmp     rsi, rdx
+        jb      .LBB8_3
+        mov     rsi, qword ptr [rbx + 8]
+        lea     rdi, [rsi + 8*r14]
+        shl     rdx, 3
+        pop     rbx
+        pop     r14
+        pop     r15
+        jmp     qword ptr [rip + memcpy@GOTPCREL]
+.LBB8_3:
+        sub     r15, rax
+        mov     rdx, qword ptr [rbx + 8]
+        lea     rsi, [rdx + 8*rcx]
+        lea     rdi, [rdx + 8*r15]
+        shl     rax, 3
+        mov     rdx, rax
+        call    qword ptr [rip + memmove@GOTPCREL]
+        mov     qword ptr [rbx + 16], r15
+.LBB8_4:
+        pop     rbx
+        pop     r14
+        pop     r15
+        ret
+
+alloc::raw_vec::finish_grow:
+        push    r15
+        push    r14
+        push    rbx
+        mov     r14, rsi
+        mov     rbx, rdi
+        test    rdx, rdx
+        je      .LBB9_5
+        mov     r15, rdx
+        cmp     qword ptr [rcx + 16], 0
+        je      .LBB9_7
+        mov     rsi, qword ptr [rcx + 8]
+        test    rsi, rsi
+        je      .LBB9_7
+        mov     rdi, qword ptr [rcx]
+        mov     rdx, r15
+        mov     rcx, r14
+        call    qword ptr [rip + __rust_realloc@GOTPCREL]
+        test    rax, rax
+        jne     .LBB9_11
+.LBB9_4:
+        mov     qword ptr [rbx + 8], r14
+        mov     qword ptr [rbx + 16], r15
+        jmp     .LBB9_6
+.LBB9_7:
+        test    r14, r14
+        je      .LBB9_8
+        mov     rdi, r14
+        mov     rsi, r15
+        call    qword ptr [rip + __rust_alloc@GOTPCREL]
+        test    rax, rax
+        je      .LBB9_4
+.LBB9_11:
+        mov     qword ptr [rbx + 8], rax
+        mov     qword ptr [rbx + 16], r14
+        xor     eax, eax
+        jmp     .LBB9_12
+.LBB9_5:
+        mov     qword ptr [rbx + 8], r14
+        mov     qword ptr [rbx + 16], 0
+.LBB9_6:
+        mov     eax, 1
+.LBB9_12:
+        mov     qword ptr [rbx], rax
+        mov     rax, rbx
+        pop     rbx
+        pop     r14
+        pop     r15
+        ret
+.LBB9_8:
+        mov     rax, r15
+        test    rax, rax
+        jne     .LBB9_11
+        jmp     .LBB9_4
+
+alloc::raw_vec::RawVec<T,A>::reserve_for_push:
+        push    r14
+        push    rbx
+        sub     rsp, 56
+        inc     rsi
+        je      .LBB10_10
+        mov     r14, rdi
+        mov     rax, qword ptr [rdi]
+        lea     rcx, [rax + rax]
+        cmp     rcx, rsi
+        cmova   rsi, rcx
+        cmp     rsi, 5
+        mov     ebx, 4
+        cmovae  rbx, rsi
+        xor     edx, edx
+        mov     rcx, rbx
+        shr     rcx, 59
+        sete    dl
+        mov     rsi, rbx
+        shl     rsi, 4
+        shl     rdx, 3
+        test    rax, rax
+        je      .LBB10_3
+        shl     rax, 4
+        mov     rcx, qword ptr [r14 + 8]
+        mov     qword ptr [rsp + 8], rcx
+        mov     qword ptr [rsp + 16], rax
+        mov     qword ptr [rsp + 24], 8
+        jmp     .LBB10_4
+.LBB10_3:
+        mov     qword ptr [rsp + 24], 0
+.LBB10_4:
+        lea     rdi, [rsp + 32]
+        lea     rcx, [rsp + 8]
+        call    alloc::raw_vec::finish_grow
+        cmp     qword ptr [rsp + 32], 0
+        mov     rdi, qword ptr [rsp + 40]
+        je      .LBB10_5
+        mov     rsi, qword ptr [rsp + 48]
+        movabs  rax, -9223372036854775807
+        cmp     rsi, rax
+        je      .LBB10_6
+        test    rsi, rsi
+        jne     .LBB10_9
+.LBB10_10:
+        call    qword ptr [rip + alloc::raw_vec::capacity_overflow@GOTPCREL]
+        ud2
+.LBB10_5:
+        mov     qword ptr [r14 + 8], rdi
+        mov     qword ptr [r14], rbx
+.LBB10_6:
+        add     rsp, 56
+        pop     rbx
+        pop     r14
+        ret
+.LBB10_9:
+        call    qword ptr [rip + alloc::alloc::handle_alloc_error@GOTPCREL]
+        ud2
+
+alloc::raw_vec::RawVec<T,A>::reserve_for_push:
+        push    r14
+        push    rbx
+        sub     rsp, 56
+        inc     rsi
+        je      .LBB11_10
+        mov     r14, rdi
+        mov     rax, qword ptr [rdi]
+        lea     rcx, [rax + rax]
+        cmp     rcx, rsi
+        cmova   rsi, rcx
+        cmp     rsi, 5
+        mov     ebx, 4
+        cmovae  rbx, rsi
+        xor     edx, edx
+        mov     rcx, rbx
+        shr     rcx, 60
+        sete    dl
+        lea     rsi, [8*rbx]
+        shl     rdx, 3
+        test    rax, rax
+        je      .LBB11_3
+        shl     rax, 3
+        mov     rcx, qword ptr [r14 + 8]
+        mov     qword ptr [rsp + 8], rcx
+        mov     qword ptr [rsp + 16], rax
+        mov     qword ptr [rsp + 24], 8
+        jmp     .LBB11_4
+.LBB11_3:
+        mov     qword ptr [rsp + 24], 0
+.LBB11_4:
+        lea     rdi, [rsp + 32]
+        lea     rcx, [rsp + 8]
+        call    alloc::raw_vec::finish_grow
+        cmp     qword ptr [rsp + 32], 0
+        mov     rdi, qword ptr [rsp + 40]
+        je      .LBB11_5
+        mov     rsi, qword ptr [rsp + 48]
+        movabs  rax, -9223372036854775807
+        cmp     rsi, rax
+        je      .LBB11_6
+        test    rsi, rsi
+        jne     .LBB11_9
+.LBB11_10:
+        call    qword ptr [rip + alloc::raw_vec::capacity_overflow@GOTPCREL]
+        ud2
+.LBB11_5:
+        mov     qword ptr [r14 + 8], rdi
+        mov     qword ptr [r14], rbx
+.LBB11_6:
+        add     rsp, 56
+        pop     rbx
+        pop     r14
+        ret
+.LBB11_9:
+        call    qword ptr [rip + alloc::alloc::handle_alloc_error@GOTPCREL]
+        ud2
+
+.LCPI12_0:
+        .quad   1
+.LCPI12_1:
+        .long   32
+        .long   128
+        .long   224
+        .long   320
+.LCPI12_2:
+        .long   416
+        .long   512
+        .long   608
+        .long   704
+.LCPI12_3:
+        .long   800
+        .long   896
+        .long   992
+        .long   1088
+.LCPI12_4:
+        .long   1184
+        .long   1280
+        .long   1376
+        .long   1472
+example::solve:
+        push    rbp
+        push    r15
+        push    r14
+        push    r13
+        push    r12
+        push    rbx
+        sub     rsp, 232
+        mov     rcx, qword ptr [rdi + 16]
+        test    rcx, rcx
+        mov     qword ptr [rsp], rcx
+        mov     qword ptr [rsp + 88], rdi
+        je      .LBB12_7
+        movabs  rax, 1152921504606846976
+        dec     rax
+        xor     ebx, ebx
+        cmp     rcx, rax
+        setbe   al
+        ja      .LBB12_185
+        lea     rbp, [8*rcx]
+        mov     bl, al
+        shl     rbx, 3
+        test    rbp, rbp
+        je      .LBB12_8
+        mov     rdi, rbp
+        mov     rsi, rbx
+        call    qword ptr [rip + __rust_alloc_zeroed@GOTPCREL]
+        test    rax, rax
+        je      .LBB12_9
+.LBB12_4:
+        mov     rcx, qword ptr [rsp]
+        mov     qword ptr [rsp + 120], rcx
+        mov     qword ptr [rsp + 56], rax
+        mov     qword ptr [rsp + 128], rax
+        mov     qword ptr [rsp + 136], rcx
+        mov     rax, qword ptr [rsp + 88]
+        mov     rdi, qword ptr [rax + 8]
+        mov     rax, rcx
+        shl     rax, 5
+        lea     rdx, [rax + 2*rax]
+        add     rdx, -96
+        movabs  rcx, -6148914691236517205
+        mulx    rcx, rcx, rcx
+        mov     r15d, 1
+        mov     rsi, rdi
+        cmp     rdx, 1440
+        mov     qword ptr [rsp + 8], rdi
+        jb      .LBB12_17
+        shr     rcx, 6
+        inc     rcx
+        mov     rdx, rcx
+        and     rdx, -16
+        lea     rdi, [rdx - 16]
+        mov     rsi, rdi
+        shr     rsi, 4
+        inc     rsi
+        mov     ebp, esi
+        and     ebp, 3
+        cmp     rdi, 48
+        jae     .LBB12_10
+        vpbroadcastq    ymm0, qword ptr [rip + .LCPI12_0]
+        mov     rdi, qword ptr [rsp + 8]
+        vmovdqa ymm1, ymm0
+        vmovdqa ymm2, ymm0
+        vmovdqa ymm3, ymm0
+        jmp     .LBB12_12
+.LBB12_7:
+        mov     qword ptr [rsp + 120], rcx
+        mov     qword ptr [rsp + 128], 8
+        mov     qword ptr [rsp + 136], rcx
+        mov     rax, qword ptr [rdi + 8]
+        mov     qword ptr [rsp + 8], rax
+        mov     r15d, 1
+        mov     eax, 8
+        mov     qword ptr [rsp + 56], rax
+        jmp     .LBB12_19
+.LBB12_8:
+        mov     rax, rbx
+        test    rax, rax
+        jne     .LBB12_4
+.LBB12_9:
+        mov     rdi, rbp
+        mov     rsi, rbx
+        call    qword ptr [rip + alloc::alloc::handle_alloc_error@GOTPCREL]
+        jmp     .LBB12_190
+.LBB12_10:
+        and     rsi, -4
+        vpbroadcastq    ymm0, qword ptr [rip + .LCPI12_0]
+        vmovdqa xmm4, xmmword ptr [rip + .LCPI12_1]
+        vmovdqa xmm5, xmmword ptr [rip + .LCPI12_2]
+        vmovdqa xmm6, xmmword ptr [rip + .LCPI12_3]
+        vmovdqa xmm7, xmmword ptr [rip + .LCPI12_4]
+        mov     rdi, qword ptr [rsp + 8]
+        vmovdqa ymm1, ymm0
+        vmovdqa ymm2, ymm0
+        vmovdqa ymm3, ymm0
+.LBB12_11:
+        kxnorw  k1, k0, k0
+        vpxor   xmm8, xmm8, xmm8
+        kxnorw  k2, k0, k0
+        vpxor   xmm9, xmm9, xmm9
+        kxnorw  k3, k0, k0
+        vpxor   xmm10, xmm10, xmm10
+        kxnorw  k4, k0, k0
+        vpxor   xmm11, xmm11, xmm11
+        kxnorw  k5, k0, k0
+        vpxor   xmm12, xmm12, xmm12
+        kxnorw  k6, k0, k0
+        vpxor   xmm13, xmm13, xmm13
+        kxnorw  k7, k0, k0
+        vpgatherdq      ymm8 {k1}, ymmword ptr [rdi + xmm4]
+        vpxor   xmm14, xmm14, xmm14
+        vpgatherdq      ymm9 {k2}, ymmword ptr [rdi + xmm5]
+        kxnorw  k1, k0, k0
+        vpgatherdq      ymm10 {k3}, ymmword ptr [rdi + xmm6]
+        vpxor   xmm15, xmm15, xmm15
+        vpgatherdq      ymm11 {k4}, ymmword ptr [rdi + xmm7]
+        kxnorw  k2, k0, k0
+        vpgatherdq      ymm12 {k5}, ymmword ptr [rdi + xmm4 + 1536]
+        vpxord  xmm16, xmm16, xmm16
+        vpgatherdq      ymm13 {k6}, ymmword ptr [rdi + xmm5 + 1536]
+        kxnorw  k3, k0, k0
+        vpgatherdq      ymm14 {k7}, ymmword ptr [rdi + xmm6 + 1536]
+        vpxord  xmm17, xmm17, xmm17
+        vpgatherdq      ymm15 {k1}, ymmword ptr [rdi + xmm7 + 1536]
+        kxnorw  k1, k0, k0
+        vpgatherdq      ymm16 {k2}, ymmword ptr [rdi + xmm4 + 3072]
+        vpxord  xmm18, xmm18, xmm18
+        vpgatherdq      ymm17 {k3}, ymmword ptr [rdi + xmm5 + 3072]
+        kxnorw  k2, k0, k0
+        vpgatherdq      ymm18 {k1}, ymmword ptr [rdi + xmm6 + 3072]
+        vpxord  xmm19, xmm19, xmm19
+        vpgatherdq      ymm19 {k2}, ymmword ptr [rdi + xmm7 + 3072]
+        kxnorw  k1, k0, k0
+        vpxord  xmm20, xmm20, xmm20
+        kxnorw  k2, k0, k0
+        vpxord  xmm21, xmm21, xmm21
+        kxnorw  k3, k0, k0
+        vpgatherdq      ymm20 {k1}, ymmword ptr [rdi + xmm4 + 4608]
+        vpxord  xmm22, xmm22, xmm22
+        vpgatherdq      ymm21 {k2}, ymmword ptr [rdi + xmm5 + 4608]
+        kxnorw  k1, k0, k0
+        vpgatherdq      ymm22 {k3}, ymmword ptr [rdi + xmm6 + 4608]
+        vpxord  xmm23, xmm23, xmm23
+        vpgatherdq      ymm23 {k1}, ymmword ptr [rdi + xmm7 + 4608]
+        vpmullq ymm0, ymm8, ymm0
+        vpmullq ymm1, ymm9, ymm1
+        vpmullq ymm2, ymm10, ymm2
+        vpmullq ymm3, ymm11, ymm3
+        vpmullq ymm8, ymm12, ymm16
+        vpmullq ymm9, ymm13, ymm17
+        vpmullq ymm0, ymm0, ymm8
+        vpmullq ymm8, ymm14, ymm18
+        vpmullq ymm1, ymm1, ymm9
+        vpmullq ymm9, ymm15, ymm19
+        vpmullq ymm2, ymm2, ymm8
+        vpmullq ymm3, ymm3, ymm9
+        vpmullq ymm0, ymm20, ymm0
+        vpmullq ymm1, ymm21, ymm1
+        vpmullq ymm2, ymm22, ymm2
+        vpmullq ymm3, ymm23, ymm3
+        add     rdi, 6144
+        add     rsi, -4
+        jne     .LBB12_11
+.LBB12_12:
+        test    rbp, rbp
+        je      .LBB12_15
+        vmovdqa xmm4, xmmword ptr [rip + .LCPI12_1]
+        vmovdqa xmm5, xmmword ptr [rip + .LCPI12_2]
+        vmovdqa xmm6, xmmword ptr [rip + .LCPI12_3]
+        vmovdqa xmm7, xmmword ptr [rip + .LCPI12_4]
+.LBB12_14:
+        kxnorw  k1, k0, k0
+        vpxor   xmm8, xmm8, xmm8
+        vpgatherdq      ymm8 {k1}, ymmword ptr [rdi + xmm4]
+        vpmullq ymm0, ymm8, ymm0
+        kxnorw  k1, k0, k0
+        vpxor   xmm8, xmm8, xmm8
+        vpgatherdq      ymm8 {k1}, ymmword ptr [rdi + xmm5]
+        vpmullq ymm1, ymm8, ymm1
+        kxnorw  k1, k0, k0
+        vpxor   xmm8, xmm8, xmm8
+        vpgatherdq      ymm8 {k1}, ymmword ptr [rdi + xmm6]
+        vpmullq ymm2, ymm8, ymm2
+        kxnorw  k1, k0, k0
+        vpxor   xmm8, xmm8, xmm8
+        vpgatherdq      ymm8 {k1}, ymmword ptr [rdi + xmm7]
+        vpmullq ymm3, ymm8, ymm3
+        add     rdi, 1536
+        dec     rbp
+        jne     .LBB12_14
+.LBB12_15:
+        vpmullq ymm1, ymm1, ymm3
+        vpmullq ymm0, ymm0, ymm2
+        vpmullq ymm0, ymm0, ymm1
+        vextracti128    xmm1, ymm0, 1
+        vpmullq xmm0, xmm0, xmm1
+        vpshufd xmm1, xmm0, 238
+        vpmullq xmm0, xmm0, xmm1
+        vmovq   r15, xmm0
+        cmp     rcx, rdx
+        je      .LBB12_19
+        lea     rsi, [rdx + 2*rdx]
+        shl     rsi, 5
+        mov     rdi, qword ptr [rsp + 8]
+        add     rsi, rdi
+.LBB12_17:
+        lea     rax, [rax + 2*rax]
+        add     rax, rdi
+.LBB12_18:
+        imul    r15, qword ptr [rsi + 32]
+        add     rsi, 96
+        cmp     rsi, rax
+        jne     .LBB12_18
+.LBB12_19:
+        xor     eax, eax
+        jmp     .LBB12_21
+.LBB12_20:
+        mov     rax, qword ptr [rsp + 104]
+        inc     eax
+        cmp     eax, 20
+        je      .LBB12_51
+.LBB12_21:
+        mov     qword ptr [rsp + 104], rax
+        cmp     qword ptr [rsp], 0
+        je      .LBB12_20
+        mov     al, 1
+        xor     ebp, ebp
+        jmp     .LBB12_24
+.LBB12_23:
+        inc     rbp
+        cmp     rbp, qword ptr [rsp]
+        setb    al
+        je      .LBB12_20
+.LBB12_24:
+        test    al, 1
+        je      .LBB12_68
+        lea     rcx, [2*rbp]
+        add     rcx, rbp
+        shl     rcx, 5
+        mov     rax, qword ptr [rsp + 8]
+        mov     rax, qword ptr [rax + rcx + 24]
+        test    rax, rax
+        je      .LBB12_23
+        mov     rdx, qword ptr [rsp + 8]
+        lea     r13, [rdx + rcx]
+        lea     r14, [rdx + rcx]
+        add     r14, 56
+        lea     rsi, [rdx + rcx + 40]
+        mov     qword ptr [rsp + 40], rsi
+        add     rcx, rdx
+        add     rcx, 48
+        mov     qword ptr [rsp + 112], rcx
+        jmp     .LBB12_29
+.LBB12_27:
+        mov     rcx, qword ptr [r12]
+        mov     rax, qword ptr [r12 + 24]
+.LBB12_28:
+        mov     rdx, qword ptr [r12 + 16]
+        add     rdx, rax
+        cmp     rdx, rcx
+        mov     esi, 0
+        cmovae  rsi, rcx
+        sub     rdx, rsi
+        mov     rcx, qword ptr [r12 + 8]
+        mov     qword ptr [rcx + 8*rdx], rbx
+        inc     rax
+        mov     qword ptr [r12 + 24], rax
+        mov     rax, qword ptr [r13 + 24]
+        test    rax, rax
+        je      .LBB12_23
+.LBB12_29:
+        mov     rdx, qword ptr [r13]
+        mov     rcx, qword ptr [r13 + 16]
+        lea     rsi, [rcx + 1]
+        cmp     rsi, rdx
+        mov     esi, 0
+        cmovae  rsi, rdx
+        neg     rsi
+        dec     rax
+        lea     rdx, [rcx + rsi]
+        inc     rdx
+        mov     qword ptr [r13 + 16], rdx
+        mov     qword ptr [r13 + 24], rax
+        cmp     rbp, qword ptr [rsp]
+        jae     .LBB12_45
+        mov     rax, qword ptr [r13 + 8]
+        mov     rax, qword ptr [rax + 8*rcx]
+        mov     rcx, qword ptr [rsp + 56]
+        inc     qword ptr [rcx + 8*rbp]
+        test    r15, r15
+        je      .LBB12_46
+        cmp     qword ptr [r14 + 24], 0
+        mov     rcx, rax
+        je      .LBB12_33
+        mov     rcx, qword ptr [r14 + 32]
+.LBB12_33:
+        cmp     qword ptr [r14 + 8], 0
+        je      .LBB12_35
+        mov     rax, qword ptr [r14 + 16]
+.LBB12_35:
+        lea     rdx, [rax + rcx]
+        imul    rax, rcx
+        cmp     qword ptr [r14], 0
+        cmove   rax, rdx
+        movabs  rcx, 6148914691236517206
+        imul    rcx
+        mov     rax, rdx
+        shr     rax, 63
+        add     rax, rdx
+        mov     rcx, rax
+        or      rcx, r15
+        shr     rcx, 32
+        je      .LBB12_37
+        cqo
+        idiv    r15
+        mov     rbx, rdx
+        jmp     .LBB12_38
+.LBB12_37:
+        xor     edx, edx
+        div     r15d
+        mov     ebx, edx
+.LBB12_38:
+        mov     rcx, qword ptr [r14 - 24]
+        test    rcx, rcx
+        je      .LBB12_47
+        mov     rax, rbx
+        or      rax, rcx
+        shr     rax, 32
+        je      .LBB12_41
+        mov     rax, rbx
+        cqo
+        idiv    rcx
+        jmp     .LBB12_42
+.LBB12_41:
+        mov     eax, ebx
+        xor     edx, edx
+        div     ecx
+.LBB12_42:
+        test    rdx, rdx
+        mov     rax, qword ptr [rsp + 112]
+        cmove   rax, qword ptr [rsp + 40]
+        mov     rax, qword ptr [rax]
+        cmp     rax, qword ptr [rsp]
+        jae     .LBB12_49
+        lea     rax, [rax + 2*rax]
+        shl     rax, 5
+        mov     rdx, qword ptr [rsp + 8]
+        lea     r12, [rdx + rax]
+        mov     rcx, qword ptr [rdx + rax]
+        mov     rax, qword ptr [rdx + rax + 24]
+        cmp     rax, rcx
+        jne     .LBB12_28
+        mov     rdi, r12
+        vzeroupper
+        call    alloc::collections::vec_deque::VecDeque<T,A>::grow
+        jmp     .LBB12_27
+.LBB12_45:
+        lea     rdx, [rip + .L__unnamed_7]
+        jmp     .LBB12_50
+.LBB12_46:
+        lea     rdx, [rip + .L__unnamed_8]
+        jmp     .LBB12_48
+.LBB12_47:
+        lea     rdx, [rip + .L__unnamed_9]
+.LBB12_48:
+        lea     rdi, [rip + str.2]
+        mov     esi, 57
+        vzeroupper
+        call    qword ptr [rip + core::panicking::panic@GOTPCREL]
+        jmp     .LBB12_190
+.LBB12_49:
+        mov     rbp, rax
+        lea     rdx, [rip + .L__unnamed_10]
+.LBB12_50:
+        mov     rdi, rbp
+        mov     rsi, qword ptr [rsp]
+        vzeroupper
+        call    qword ptr [rip + core::panicking::panic_bounds_check@GOTPCREL]
+        jmp     .LBB12_190
+.LBB12_51:
+        mov     rcx, qword ptr [rsp + 128]
+        mov     r12, qword ptr [rsp + 136]
+        cmp     r12, 21
+        mov     qword ptr [rsp + 32], rcx
+        jae     .LBB12_54
+        cmp     r12, 2
+        jb      .LBB12_161
+        lea     rax, [r12 - 1]
+        lea     r8, [rcx + 8*r12]
+        add     r8, -8
+        lea     rcx, [rcx + 8*r12]
+        mov     rbp, -2
+        mov     rsi, qword ptr [rsp + 32]
+        jmp     .LBB12_60
+.LBB12_54:
+        movabs  rax, 2305843009213693948
+        or      rax, 3
+        xor     ebx, ebx
+        cmp     r12, rax
+        setbe   al
+        ja      .LBB12_188
+        mov     rbp, r12
+        shr     rbp
+        lea     r14, [8*rbp]
+        mov     bl, al
+        shl     rbx, 3
+        test    r14, r14
+        je      .LBB12_69
+        mov     rdi, r14
+        mov     rsi, rbx
+        vzeroupper
+        call    qword ptr [rip + __rust_alloc@GOTPCREL]
+        jmp     .LBB12_70
+.LBB12_57:
+        add     r9, 16
+        mov     rax, r9
+.LBB12_58:
+        mov     qword ptr [rax], rdi
+.LBB12_59:
+        add     rcx, -8
+        inc     rbp
+        mov     rax, r10
+        test    r10, r10
+        je      .LBB12_160
+.LBB12_60:
+        lea     r10, [rax - 1]
+        mov     rdx, qword ptr [rsp + 32]
+        mov     rdi, qword ptr [rdx + 8*rax - 8]
+        mov     rbx, qword ptr [rdx + 8*rax]
+        cmp     rbx, rdi
+        jge     .LBB12_59
+        lea     r9, [rsi + 8*rax]
+        add     r9, -8
+        mov     rdx, r12
+        sub     rdx, r10
+        lea     rax, [rsi + 8*rax]
+        mov     qword ptr [r9], rbx
+        cmp     rdx, 3
+        jb      .LBB12_58
+        mov     rbx, qword ptr [r9 + 16]
+        cmp     rbx, rdi
+        jge     .LBB12_58
+        mov     qword ptr [rax], rbx
+        mov     rax, r8
+        cmp     rdx, 3
+        je      .LBB12_58
+        mov     rbx, qword ptr [r9 + 24]
+        mov     rdx, rbp
+        mov     rax, rcx
+        cmp     rbx, rdi
+        jge     .LBB12_57
+.LBB12_65:
+        mov     qword ptr [rax], rbx
+        sub     rdx, 1
+        jb      .LBB12_67
+        mov     rbx, qword ptr [rax + 16]
+        add     rax, 8
+        cmp     rbx, rdi
+        jl      .LBB12_65
+        jmp     .LBB12_58
+.LBB12_67:
+        mov     rax, r8
+        jmp     .LBB12_58
+.LBB12_68:
+        lea     rdx, [rip + .L__unnamed_11]
+        jmp     .LBB12_50
+.LBB12_69:
+        mov     rax, rbx
+.LBB12_70:
+        test    rax, rax
+        je      .LBB12_189
+        mov     qword ptr [rsp + 208], rbp
+        mov     qword ptr [rsp + 216], rax
+        mov     qword ptr [rsp + 224], 0
+        mov     qword ptr [rsp + 144], 0
+        mov     qword ptr [rsp + 152], 8
+        mov     qword ptr [rsp + 160], 0
+        mov     rdx, qword ptr [rsp + 32]
+        lea     rcx, [rdx - 8]
+        mov     qword ptr [rsp + 80], rcx
+        lea     rcx, [rdx + 80]
+        mov     qword ptr [rsp + 192], rcx
+        lea     rcx, [rdx - 32]
+        mov     qword ptr [rsp + 168], rcx
+        lea     rcx, [rdx - 16]
+        mov     qword ptr [rsp + 184], rcx
+        lea     rcx, [rdx + 8]
+        mov     qword ptr [rsp + 176], rcx
+        mov     ebx, 8
+        xor     r13d, r13d
+        lea     rcx, [rip + .L__unnamed_12]
+        mov     qword ptr [rsp + 64], rcx
+        lea     rcx, [rip + .L__unnamed_13]
+        mov     qword ptr [rsp + 72], rcx
+        xor     ebp, ebp
+        mov     r14, r12
+        mov     qword ptr [rsp + 96], r12
+        mov     qword ptr [rsp + 48], rax
+        jmp     .LBB12_74
+.LBB12_153:
+        mov     r13d, 2
+        mov     ebp, 2
+.LBB12_73:
+        test    r14, r14
+        je      .LBB12_156
+.LBB12_74:
+        cmp     r14, 1
+        je      .LBB12_83
+        mov     r15, r14
+        mov     qword ptr [rsp + 24], rbx
+        mov     rdx, qword ptr [rsp + 32]
+        mov     rsi, qword ptr [rdx + 8*r14 - 16]
+        cmp     qword ptr [rdx + 8*r14 - 8], rsi
+        jge     .LBB12_84
+        mov     qword ptr [rsp + 8], rbp
+        mov     qword ptr [rsp + 40], r13
+        lea     r10, [r15 - 2]
+        lea     r9, [8*r15]
+        mov     rax, qword ptr [rsp + 192]
+        lea     rdi, [rax + 8*r15]
+        lea     r8, [rdx + 8*r15]
+        mov     rax, qword ptr [rsp + 184]
+        mov     qword ptr [rsp + 16], r15
+        lea     rbx, [rax + 8*r15]
+        mov     edx, 2
+        xor     eax, eax
+.LBB12_77:
+        mov     r13, rax
+        mov     rcx, rdi
+        mov     r15, rdx
+        mov     r14, rbx
+        mov     r11, r10
+        add     r11, rax
+        je      .LBB12_79
+        mov     rbp, qword ptr [r8 + 8*r13 - 24]
+        lea     rax, [r13 - 1]
+        lea     rdi, [rcx - 8]
+        lea     rdx, [r15 + 1]
+        lea     rbx, [r14 - 8]
+        cmp     rsi, rbp
+        mov     rsi, rbp
+        jl      .LBB12_77
+.LBB12_79:
+        mov     rax, qword ptr [rsp + 16]
+        cmp     rax, r11
+        jb      .LBB12_186
+        cmp     rax, r12
+        ja      .LBB12_187
+        mov     rbx, r13
+        neg     rbx
+        lea     r10, [rbx + 2]
+        add     rbx, 2
+        jae     .LBB12_89
+.LBB12_82:
+        mov     r13, qword ptr [rsp + 40]
+        mov     r14, r11
+        mov     rbp, qword ptr [rsp + 8]
+        jmp     .LBB12_100
+.LBB12_83:
+        mov     r15d, 1
+        xor     r14d, r14d
+        cmp     rbp, qword ptr [rsp + 144]
+        je      .LBB12_121
+        jmp     .LBB12_123
+.LBB12_84:
+        lea     rax, [r15 - 3]
+        mov     ebx, 1
+.LBB12_85:
+        cmp     rax, -1
+        je      .LBB12_88
+        mov     rcx, qword ptr [rdx + 8*rax]
+        inc     rbx
+        dec     rax
+        cmp     rsi, rcx
+        mov     rsi, rcx
+        jge     .LBB12_85
+        mov     r14, r15
+        sub     r14, rbx
+        test    r14, r14
+        jne     .LBB12_101
+        jmp     .LBB12_119
+.LBB12_88:
+        xor     r14d, r14d
+        jmp     .LBB12_120
+.LBB12_89:
+        cmp     rbx, 16
+        jae     .LBB12_91
+        xor     esi, esi
+        jmp     .LBB12_98
+.LBB12_91:
+        shr     r10
+        mov     rsi, r10
+        and     rsi, -8
+        lea     rax, [rsi - 8]
+        mov     rbp, rax
+        shr     rbp, 3
+        inc     rbp
+        test    rax, rax
+        je      .LBB12_94
+        mov     rax, qword ptr [rsp + 168]
+        lea     rdx, [rax + r9]
+        mov     rax, r15
+        shr     rax, 4
+        lea     r12, [8*rax - 8]
+        shr     r12, 3
+        inc     r12
+        and     r12, -2
+        xor     edi, edi
+.LBB12_93:
+        vpermpd ymm0, ymmword ptr [rdx], 27
+        vpermpd ymm1, ymmword ptr [rdx - 32], 27
+        vpermpd ymm2, ymmword ptr [rcx + 8*rdi - 96], 27
+        vmovups ymmword ptr [rcx + 8*rdi - 96], ymm0
+        vpermpd ymm0, ymmword ptr [rcx + 8*rdi - 64], 27
+        vmovups ymmword ptr [rcx + 8*rdi - 64], ymm1
+        vmovups ymmword ptr [rdx], ymm2
+        vmovups ymmword ptr [rdx - 32], ymm0
+        vpermpd ymm0, ymmword ptr [rdx - 64], 27
+        vpermq  ymm1, ymmword ptr [rdx - 96], 27
+        vpermq  ymm2, ymmword ptr [rcx + 8*rdi - 32], 27
+        vmovups ymmword ptr [rcx + 8*rdi - 32], ymm0
+        vpermq  ymm0, ymmword ptr [rcx + 8*rdi], 27
+        vmovdqu ymmword ptr [rcx + 8*rdi], ymm1
+        vmovdqu ymmword ptr [rdx - 64], ymm2
+        vmovdqu ymmword ptr [rdx - 96], ymm0
+        add     rdi, 16
+        add     rdx, -128
+        add     r12, -2
+        jne     .LBB12_93
+        jmp     .LBB12_95
+.LBB12_94:
+        xor     edi, edi
+.LBB12_95:
+        test    bpl, 1
+        je      .LBB12_97
+        lea     rax, [8*r10]
+        lea     rcx, [r8 + 8*rdi]
+        not     rdi
+        add     rdi, r10
+        sub     r8, rax
+        vpermpd ymm0, ymmword ptr [r8 + 8*rdi - 24], 27
+        vpermq  ymm1, ymmword ptr [r8 + 8*rdi - 56], 27
+        vpermq  ymm2, ymmword ptr [rcx + 8*r13 - 16], 27
+        vmovups ymmword ptr [rcx + 8*r13 - 16], ymm0
+        vpermq  ymm0, ymmword ptr [rcx + 8*r13 + 16], 27
+        vmovdqu ymmword ptr [rcx + 8*r13 + 16], ymm1
+        vmovdqu ymmword ptr [r8 + 8*rdi - 24], ymm2
+        vmovdqu ymmword ptr [r8 + 8*rdi - 56], ymm0
+.LBB12_97:
+        cmp     r10, rsi
+        mov     r12, qword ptr [rsp + 96]
+        je      .LBB12_82
+.LBB12_98:
+        lea     rax, [r14 + 8*rsi]
+        shr     r15
+        neg     r15
+        neg     rsi
+        add     r9, qword ptr [rsp + 80]
+        mov     r13, qword ptr [rsp + 40]
+        mov     r14, r11
+        mov     rbp, qword ptr [rsp + 8]
+.LBB12_99:
+        mov     rcx, qword ptr [rax]
+        mov     rdx, qword ptr [r9 + 8*rsi]
+        mov     qword ptr [rax], rdx
+        mov     qword ptr [r9 + 8*rsi], rcx
+        add     rax, 8
+        dec     rsi
+        cmp     r15, rsi
+        jne     .LBB12_99
+.LBB12_100:
+        mov     r15, qword ptr [rsp + 16]
+        test    r14, r14
+        je      .LBB12_119
+.LBB12_101:
+        cmp     rbx, 9
+        ja      .LBB12_119
+        mov     rax, qword ptr [rsp + 80]
+        lea     r9, [rax + 8*r15]
+        mov     rax, qword ptr [rsp + 176]
+        lea     rcx, [rax + 8*r14]
+        lea     r8, [r15 - 3]
+        mov     rbx, qword ptr [rsp + 24]
+.LBB12_103:
+        lea     rdi, [r14 - 1]
+        mov     rsi, r15
+        sub     rsi, rdi
+        jb      .LBB12_180
+        cmp     r15, r12
+        ja      .LBB12_182
+        cmp     rsi, 2
+        jb      .LBB12_116
+        mov     rax, qword ptr [rsp + 32]
+        lea     rax, [rax + 8*rdi]
+        mov     r10, qword ptr [rax]
+        mov     rdx, qword ptr [rax + 8]
+        cmp     rdx, r10
+        jge     .LBB12_116
+        lea     rbp, [rax + 8]
+        mov     qword ptr [rax], rdx
+        cmp     rsi, 3
+        jb      .LBB12_115
+        mov     rdx, qword ptr [rax + 16]
+        cmp     rdx, r10
+        jge     .LBB12_115
+        mov     qword ptr [rbp], rdx
+        mov     rbp, r9
+        cmp     rsi, 3
+        je      .LBB12_115
+        mov     rbx, qword ptr [rax + 24]
+        mov     rdx, r8
+        mov     rbp, rcx
+        cmp     rbx, r10
+        jge     .LBB12_113
+.LBB12_111:
+        mov     qword ptr [rbp], rbx
+        cmp     r14, rdx
+        je      .LBB12_114
+        mov     rbx, qword ptr [rbp + 16]
+        add     rbp, 8
+        dec     rdx
+        cmp     rbx, r10
+        jl      .LBB12_111
+        jmp     .LBB12_115
+.LBB12_113:
+        add     rax, 16
+        mov     rbp, rax
+        jmp     .LBB12_115
+.LBB12_114:
+        mov     rbp, r9
+.LBB12_115:
+        mov     qword ptr [rbp], r10
+        mov     rbx, qword ptr [rsp + 24]
+.LBB12_116:
+        test    rdi, rdi
+        je      .LBB12_118
+        add     rcx, -8
+        mov     r14, rdi
+        cmp     rsi, 10
+        jb      .LBB12_103
+.LBB12_118:
+        mov     rbp, r13
+        mov     r14, rdi
+        mov     r15, rsi
+        cmp     rbp, qword ptr [rsp + 144]
+        jne     .LBB12_123
+        jmp     .LBB12_121
+.LBB12_119:
+        mov     r15, rbx
+.LBB12_120:
+        mov     rbx, qword ptr [rsp + 24]
+        cmp     rbp, qword ptr [rsp + 144]
+        jne     .LBB12_123
+.LBB12_121:
+        lea     rdi, [rsp + 144]
+        mov     rsi, rbp
+        vzeroupper
+        call    alloc::raw_vec::RawVec<T,A>::reserve_for_push
+        mov     rbx, qword ptr [rsp + 152]
+        mov     rbp, qword ptr [rsp + 160]
+.LBB12_123:
+        mov     rax, rbp
+        shl     rax, 4
+        mov     qword ptr [rbx + rax], r14
+        mov     qword ptr [rbx + rax + 8], r15
+        inc     rbp
+        mov     qword ptr [rsp + 160], rbp
+        mov     r13, rbp
+        cmp     rbp, 2
+        mov     qword ptr [rsp + 24], rbx
+        mov     qword ptr [rsp + 200], r14
+        jb      .LBB12_73
+.LBB12_124:
+        lea     r8, [rbp - 1]
+        mov     rcx, r8
+        shl     rcx, 4
+        cmp     qword ptr [rbx + rcx], 0
+        je      .LBB12_130
+        mov     rdx, rbp
+        shl     rdx, 4
+        mov     rax, qword ptr [rdx + rbx - 24]
+        mov     r9, qword ptr [rbx + rcx + 8]
+        cmp     rax, r9
+        jbe     .LBB12_130
+        cmp     rbp, 3
+        jb      .LBB12_153
+        lea     rsi, [rbp - 3]
+        mov     rcx, rsi
+        shl     rcx, 4
+        mov     rcx, qword ptr [rbx + rcx + 8]
+        lea     rdi, [r9 + rax]
+        cmp     rcx, rdi
+        jbe     .LBB12_132
+        cmp     rbp, 4
+        jb      .LBB12_154
+        add     rax, rcx
+        cmp     qword ptr [rdx + rbx - 56], rax
+        jbe     .LBB12_132
+        jmp     .LBB12_155
+.LBB12_130:
+        cmp     rbp, 3
+        jb      .LBB12_133
+        mov     r9, qword ptr [rbx + rcx + 8]
+        lea     rsi, [rbp - 3]
+        mov     rcx, rsi
+        shl     rcx, 4
+        mov     rcx, qword ptr [rbx + rcx + 8]
+.LBB12_132:
+        cmp     rcx, r9
+        jb      .LBB12_134
+.LBB12_133:
+        lea     rsi, [rbp - 2]
+.LBB12_134:
+        lea     r15, [rsi + 1]
+        cmp     rbp, r15
+        jbe     .LBB12_173
+        shl     r15, 4
+        mov     rdi, qword ptr [rbx + r15]
+        mov     r13, rsi
+        shl     r13, 4
+        mov     rdx, qword ptr [rbx + r13 + 8]
+        mov     rax, qword ptr [rbx + r13]
+        add     rax, rdx
+        mov     r14, rax
+        sub     r14, rdi
+        mov     qword ptr [rsp + 16], rax
+        jb      .LBB12_178
+        cmp     rax, r12
+        ja      .LBB12_184
+        mov     qword ptr [rsp + 104], rdx
+        mov     qword ptr [rsp + 112], rsi
+        mov     qword ptr [rsp + 8], rbp
+        mov     qword ptr [rsp + 40], r8
+        mov     rcx, qword ptr [rbx + r15 + 8]
+        mov     rax, qword ptr [rsp + 32]
+        mov     qword ptr [rsp + 56], rdi
+        lea     r12, [rax + 8*rdi]
+        lea     rbx, [r12 + 8*rcx]
+        mov     rbp, r14
+        sub     rbp, rcx
+        cmp     rbp, rcx
+        mov     qword ptr [rsp], rcx
+        jae     .LBB12_146
+        lea     rdx, [8*rbp]
+        mov     r14, qword ptr [rsp + 48]
+        mov     rdi, r14
+        mov     rsi, rbx
+        vzeroupper
+        call    qword ptr [rip + memcpy@GOTPCREL]
+        lea     rdx, [r14 + 8*rbp]
+        cmp     qword ptr [rsp], 0
+        jle     .LBB12_143
+        test    rbp, rbp
+        jle     .LBB12_143
+        mov     rax, qword ptr [rsp + 80]
+        mov     rcx, qword ptr [rsp + 16]
+        lea     rax, [rax + 8*rcx]
+.LBB12_141:
+        mov     rcx, rdx
+        mov     rsi, rbx
+        add     rdx, -8
+        add     rbx, -8
+        mov     rdi, qword ptr [rcx - 8]
+        mov     rbp, qword ptr [rsi - 8]
+        cmp     rdi, rbp
+        cmovl   rdx, rcx
+        cmovge  rbx, rsi
+        cmovg   rbp, rdi
+        mov     qword ptr [rax], rbp
+        cmp     rbx, r12
+        jbe     .LBB12_143
+        add     rax, -8
+        cmp     rdx, r14
+        ja      .LBB12_141
+.LBB12_143:
+        mov     r12, rbx
+        mov     rsi, r14
+        jmp     .LBB12_144
+.LBB12_146:
+        lea     rdx, [8*rcx]
+        mov     rbp, qword ptr [rsp + 48]
+        mov     rdi, rbp
+        mov     rsi, r12
+        vzeroupper
+        call    qword ptr [rip + memcpy@GOTPCREL]
+        mov     rax, qword ptr [rsp]
+        lea     rdx, [8*rax]
+        add     rdx, rbp
+        test    rax, rax
+        jle     .LBB12_152
+        cmp     r14, rax
+        jle     .LBB12_152
+        mov     rax, qword ptr [rsp + 32]
+        mov     rcx, qword ptr [rsp + 16]
+        lea     r8, [rax + 8*rcx]
+        mov     rsi, qword ptr [rsp + 48]
+.LBB12_149:
+        mov     r9, qword ptr [rbx]
+        mov     rdi, qword ptr [rsi]
+        xor     ecx, ecx
+        xor     ebp, ebp
+        cmp     r9, rdi
+        setl    al
+        setge   bpl
+        cmovl   rdi, r9
+        lea     rsi, [rsi + 8*rbp]
+        mov     qword ptr [r12], rdi
+        add     r12, 8
+        cmp     rsi, rdx
+        jae     .LBB12_144
+        mov     cl, al
+        lea     rbx, [rbx + 8*rcx]
+        cmp     rbx, r8
+        jb      .LBB12_149
+        jmp     .LBB12_144
+.LBB12_152:
+        mov     rsi, qword ptr [rsp + 48]
+.LBB12_144:
+        sub     rdx, rsi
+        mov     rdi, r12
+        call    qword ptr [rip + memcpy@GOTPCREL]
+        mov     rbp, qword ptr [rsp + 8]
+        mov     rdi, qword ptr [rsp + 112]
+        cmp     rbp, rdi
+        mov     rbx, qword ptr [rsp + 24]
+        jbe     .LBB12_174
+        add     r15, rbx
+        lea     rax, [rbx + r13]
+        lea     rcx, [rbx + r13]
+        add     rcx, 8
+        mov     rsi, qword ptr [rsp + 104]
+        add     rsi, qword ptr [rsp]
+        mov     rdx, qword ptr [rsp + 56]
+        mov     qword ptr [rax], rdx
+        mov     qword ptr [rcx], rsi
+        lea     rsi, [r15 + 16]
+        movabs  rax, 1152921504606846976
+        add     rbp, rax
+        sub     rbp, rdi
+        shl     rbp, 4
+        add     rbp, -32
+        mov     rdi, r15
+        mov     rdx, rbp
+        call    qword ptr [rip + memmove@GOTPCREL]
+        mov     r13, qword ptr [rsp + 40]
+        mov     qword ptr [rsp + 160], r13
+        mov     rbp, r13
+        cmp     r13, 1
+        mov     r12, qword ptr [rsp + 96]
+        mov     r14, qword ptr [rsp + 200]
+        ja      .LBB12_124
+        mov     ebp, 1
+        jmp     .LBB12_73
+.LBB12_154:
+        mov     r13d, 3
+        mov     ebp, 3
+        jmp     .LBB12_73
+.LBB12_155:
+        mov     r13, rbp
+        jmp     .LBB12_73
+.LBB12_156:
+        mov     rsi, qword ptr [rsp + 144]
+        test    rsi, rsi
+        je      .LBB12_158
+        shl     rsi, 4
+        mov     edx, 8
+        mov     rdi, rbx
+        vzeroupper
+        call    qword ptr [rip + __rust_dealloc@GOTPCREL]
+.LBB12_158:
+        mov     rsi, qword ptr [rsp + 208]
+        test    rsi, rsi
+        je      .LBB12_160
+        shl     rsi, 3
+        mov     rdi, qword ptr [rsp + 216]
+        mov     edx, 8
+        vzeroupper
+        call    qword ptr [rip + __rust_dealloc@GOTPCREL]
+.LBB12_160:
+        mov     r12, qword ptr [rsp + 136]
+.LBB12_161:
+        mov     rbp, r12
+        sub     rbp, 1
+        jb      .LBB12_176
+        je      .LBB12_177
+        mov     rdi, qword ptr [rsp + 128]
+        mov     rax, qword ptr [rdi + 8*rbp]
+        mov     qword ptr [rsp], rax
+        mov     r15, qword ptr [rdi + 8*r12 - 16]
+        mov     rsi, qword ptr [rsp + 120]
+        test    rsi, rsi
+        je      .LBB12_165
+        shl     rsi, 3
+        mov     edx, 8
+        vzeroupper
+        call    qword ptr [rip + __rust_dealloc@GOTPCREL]
+.LBB12_165:
+        mov     rax, qword ptr [rsp + 88]
+        mov     rbp, qword ptr [rax + 8]
+        mov     r14, rax
+        mov     rax, qword ptr [rax + 16]
+        test    rax, rax
+        je      .LBB12_170
+        shl     rax, 5
+        lea     r12, [rax + 2*rax]
+        xor     ebx, ebx
+        mov     r13, qword ptr [rip + __rust_dealloc@GOTPCREL]
+        jmp     .LBB12_168
+.LBB12_167:
+        add     rbx, 96
+        cmp     r12, rbx
+        je      .LBB12_170
+.LBB12_168:
+        mov     rsi, qword ptr [rbp + rbx]
+        test    rsi, rsi
+        je      .LBB12_167
+        shl     rsi, 3
+        mov     rdi, qword ptr [rbp + rbx + 8]
+        mov     edx, 8
+        vzeroupper
+        call    r13
+        jmp     .LBB12_167
+.LBB12_170:
+        mov     rax, qword ptr [r14]
+        test    rax, rax
+        je      .LBB12_172
+        shl     rax, 5
+        lea     rsi, [rax + 2*rax]
+        mov     edx, 8
+        mov     rdi, rbp
+        vzeroupper
+        call    qword ptr [rip + __rust_dealloc@GOTPCREL]
+.LBB12_172:
+        imul    r15, qword ptr [rsp]
+        mov     rax, r15
+        add     rsp, 232
+        pop     rbx
+        pop     r12
+        pop     r13
+        pop     r14
+        pop     r15
+        pop     rbp
+        vzeroupper
+        ret
+.LBB12_173:
+        lea     rdx, [rip + .L__unnamed_14]
+        jmp     .LBB12_175
+.LBB12_174:
+        mov     r15, rdi
+        lea     rdx, [rip + .L__unnamed_15]
+.LBB12_175:
+        mov     rdi, r15
+        mov     rsi, rbp
+        vzeroupper
+        call    qword ptr [rip + core::panicking::panic_bounds_check@GOTPCREL]
+        jmp     .LBB12_190
+.LBB12_176:
+        xor     eax, eax
+        mov     qword ptr [rsp], rax
+        lea     rdx, [rip + .L__unnamed_16]
+        jmp     .LBB12_50
+.LBB12_177:
+        add     r12, -2
+        lea     rdx, [rip + .L__unnamed_17]
+        mov     eax, 1
+        mov     qword ptr [rsp], rax
+        mov     rbp, r12
+        jmp     .LBB12_50
+.LBB12_178:
+        lea     rax, [rip + .L__unnamed_12]
+.LBB12_179:
+        mov     qword ptr [rsp + 72], rax
+        jmp     .LBB12_181
+.LBB12_180:
+        mov     qword ptr [rsp + 16], r15
+.LBB12_181:
+        mov     rsi, qword ptr [rsp + 16]
+        mov     rdx, qword ptr [rsp + 72]
+        vzeroupper
+        call    qword ptr [rip + core::slice::index::slice_index_order_fail@GOTPCREL]
+        jmp     .LBB12_190
+.LBB12_182:
+        mov     qword ptr [rsp + 16], r15
+        lea     rax, [rip + .L__unnamed_13]
+.LBB12_183:
+        mov     qword ptr [rsp + 64], rax
+.LBB12_184:
+        mov     rdi, qword ptr [rsp + 16]
+        mov     rsi, qword ptr [rsp + 96]
+        mov     rdx, qword ptr [rsp + 64]
+        vzeroupper
+        call    qword ptr [rip + core::slice::index::slice_end_index_len_fail@GOTPCREL]
+        jmp     .LBB12_190
+.LBB12_185:
+        call    qword ptr [rip + alloc::raw_vec::capacity_overflow@GOTPCREL]
+        jmp     .LBB12_190
+.LBB12_186:
+        lea     rdi, [rax + r13]
+        add     rdi, -2
+        lea     rax, [rip + .L__unnamed_18]
+        jmp     .LBB12_179
+.LBB12_187:
+        lea     rax, [rip + .L__unnamed_18]
+        jmp     .LBB12_183
+.LBB12_188:
+        vzeroupper
+        call    qword ptr [rip + alloc::raw_vec::capacity_overflow@GOTPCREL]
+        jmp     .LBB12_190
+.LBB12_189:
+        mov     rdi, r14
+        mov     rsi, rbx
+        vzeroupper
+        call    qword ptr [rip + alloc::alloc::handle_alloc_error@GOTPCREL]
+.LBB12_190:
+        ud2
+        jmp     .LBB12_195
+        mov     rbx, rax
+        jmp     .LBB12_201
+        jmp     .LBB12_199
+.LBB12_195:
+        mov     rbx, rax
+        lea     rdi, [rsp + 144]
+        call    core::ptr::drop_in_place<alloc::vec::Vec<alloc::slice::merge_sort::Run>>
+        lea     rdi, [rsp + 208]
+        call    core::ptr::drop_in_place<alloc::vec::Vec<i64>>
+        jmp     .LBB12_200
+        call    qword ptr [rip + core::panicking::panic_no_unwind@GOTPCREL]
+        ud2
+.LBB12_199:
+        mov     rbx, rax
+.LBB12_200:
+        lea     rdi, [rsp + 120]
+        call    core::ptr::drop_in_place<alloc::vec::Vec<i64>>
+.LBB12_201:
+        mov     rdi, qword ptr [rsp + 88]
+        call    core::ptr::drop_in_place<alloc::vec::Vec<example::Monkey>>
+        mov     rdi, rbx
+        call    _Unwind_Resume@PLT
+        ud2
+        call    qword ptr [rip + core::panicking::panic_no_unwind@GOTPCREL]
+        ud2
+
+<example::Monkey as core::fmt::Debug>::fmt:
+        push    rbp
+        push    r15
+        push    r14
+        push    r13
+        push    r12
+        push    rbx
+        sub     rsp, 40
+        mov     rax, rsi
+        mov     qword ptr [rsp], rdi
+        lea     rcx, [rdi + 56]
+        mov     qword ptr [rsp + 8], rcx
+        lea     rcx, [rdi + 32]
+        mov     qword ptr [rsp + 16], rcx
+        lea     rcx, [rdi + 40]
+        mov     qword ptr [rsp + 24], rcx
+        add     rdi, 48
+        mov     qword ptr [rsp + 32], rdi
+        sub     rsp, 8
+        lea     rbx, [rip + .L__unnamed_2]
+        lea     r10, [rsp + 40]
+        lea     r11, [rip + .L__unnamed_19]
+        lea     r14, [rsp + 32]
+        lea     rbp, [rip + .L__unnamed_20]
+        lea     r13, [rsp + 24]
+        lea     r12, [rip + .L__unnamed_21]
+        lea     r15, [rip + .L__unnamed_22]
+        lea     rsi, [rip + .L__unnamed_23]
+        lea     rcx, [rip + .L__unnamed_24]
+        mov     edx, 6
+        mov     r8d, 5
+        lea     r9, [rsp + 8]
+        mov     rdi, rax
+        push    rbx
+        push    r10
+        push    12
+        push    r11
+        push    rbx
+        push    r14
+        push    11
+        push    rbp
+        push    rbx
+        push    r13
+        push    4
+        push    r12
+        push    r15
+        lea     rax, [rsp + 120]
+        push    rax
+        push    9
+        lea     rax, [rip + .L__unnamed_25]
+        push    rax
+        lea     rax, [rip + .L__unnamed_26]
+        push    rax
+        call    qword ptr [rip + core::fmt::Formatter::debug_struct_field5_finish@GOTPCREL]
+        add     rsp, 184
+        pop     rbx
+        pop     r12
+        pop     r13
+        pop     r14
+        pop     r15
+        pop     rbp
+        ret
+
+<example::Operation as core::fmt::Debug>::fmt:
+        sub     rsp, 24
+        mov     rax, rsi
+        cmp     qword ptr [rdi], 0
+        je      .LBB14_1
+        lea     rcx, [rdi + 8]
+        mov     qword ptr [rsp + 8], rcx
+        add     rdi, 24
+        mov     qword ptr [rsp + 16], rdi
+        lea     r8, [rip + .L__unnamed_4]
+        mov     qword ptr [rsp], r8
+        lea     rsi, [rip + .L__unnamed_5]
+        lea     rcx, [rsp + 8]
+        lea     r9, [rsp + 16]
+        mov     edx, 8
+        jmp     .LBB14_3
+.LBB14_1:
+        lea     rcx, [rdi + 8]
+        mov     qword ptr [rsp + 8], rcx
+        add     rdi, 24
+        mov     qword ptr [rsp + 16], rdi
+        lea     r8, [rip + .L__unnamed_4]
+        mov     qword ptr [rsp], r8
+        lea     rsi, [rip + .L__unnamed_6]
+        lea     rcx, [rsp + 8]
+        lea     r9, [rsp + 16]
+        mov     edx, 3
+.LBB14_3:
+        mov     rdi, rax
+        call    qword ptr [rip + core::fmt::Formatter::debug_tuple_field2_finish@GOTPCREL]
+        add     rsp, 24
+        ret
+
+<example::Operand as core::fmt::Debug>::fmt:
+        push    rax
+        mov     rax, rsi
+        cmp     qword ptr [rdi], 0
+        je      .LBB15_2
+        add     rdi, 8
+        mov     qword ptr [rsp], rdi
+        lea     rsi, [rip + .L__unnamed_1]
+        lea     r8, [rip + .L__unnamed_2]
+        mov     rcx, rsp
+        mov     edx, 5
+        mov     rdi, rax
+        call    qword ptr [rip + core::fmt::Formatter::debug_tuple_field1_finish@GOTPCREL]
+        pop     rcx
+        ret
+.LBB15_2:
+        lea     rsi, [rip + .L__unnamed_3]
+        mov     edx, 3
+        mov     rdi, rax
+        pop     rax
+        jmp     qword ptr [rip + _ZN4core3fmt9Formatter9write_str17h57528041899d3afeE@GOTPCREL]
+
+.L__unnamed_2:
+        .quad   core::ptr::drop_in_place<&i64>
+        .asciz  "\b\000\000\000\000\000\000\000\b\000\000\000\000\000\000"
+        .quad   <&T as core::fmt::Debug>::fmt
+
+.L__unnamed_27:
+        .ascii  "/rustc/bdb07a8ec8e77aa10fb84fae1d4ff71c21180bb4/library/alloc/src/slice.rs"
+
+.L__unnamed_18:
+        .quad   .L__unnamed_27
+        .asciz  "J\000\000\000\000\000\000\000!\004\000\000\025\000\000"
+
+.L__unnamed_13:
+        .quad   .L__unnamed_27
+        .asciz  "J\000\000\000\000\000\000\000/\004\000\000\036\000\000"
+
+.L__unnamed_14:
+        .quad   .L__unnamed_27
+        .asciz  "J\000\000\000\000\000\000\0008\004\000\000\030\000\000"
+
+.L__unnamed_12:
+        .quad   .L__unnamed_27
+        .asciz  "J\000\000\000\000\000\000\000<\004\000\000\032\000\000"
+
+.L__unnamed_15:
+        .quad   .L__unnamed_27
+        .asciz  "J\000\000\000\000\000\000\000B\004\000\000\r\000\000"
+
+.L__unnamed_28:
+        .ascii  "/app/example.rs"
+
+.L__unnamed_11:
+        .quad   .L__unnamed_28
+        .asciz  "\017\000\000\000\000\000\000\000-\000\000\000\037\000\000"
+
+.L__unnamed_7:
+        .quad   .L__unnamed_28
+        .asciz  "\017\000\000\000\000\000\000\0002\000\000\000\r\000\000"
+
+.L__unnamed_8:
+        .quad   .L__unnamed_28
+        .asciz  "\017\000\000\000\000\000\000\0007\000\000\000\r\000\000"
+
+str.2:
+        .ascii  "attempt to calculate the remainder with a divisor of zero"
+
+.L__unnamed_9:
+        .quad   .L__unnamed_28
+        .asciz  "\017\000\000\000\000\000\000\0009\000\000\000\033\000\000"
+
+.L__unnamed_10:
+        .quad   .L__unnamed_28
+        .asciz  "\017\000\000\000\000\000\000\000?\000\000\000\r\000\000"
+
+.L__unnamed_16:
+        .quad   .L__unnamed_28
+        .asciz  "\017\000\000\000\000\000\000\000M\000\000\000\005\000\000"
+
+.L__unnamed_17:
+        .quad   .L__unnamed_28
+        .asciz  "\017\000\000\000\000\000\000\000M\000\000\000*\000\000"
+
+.L__unnamed_23:
+        .ascii  "Monkey"
+
+.L__unnamed_24:
+        .ascii  "items"
+
+.L__unnamed_26:
+        .quad   core::ptr::drop_in_place<&i64>
+        .asciz  "\b\000\000\000\000\000\000\000\b\000\000\000\000\000\000"
+        .quad   <&T as core::fmt::Debug>::fmt
+
+.L__unnamed_25:
+        .ascii  "operation"
+
+.L__unnamed_22:
+        .quad   core::ptr::drop_in_place<&i64>
+        .asciz  "\b\000\000\000\000\000\000\000\b\000\000\000\000\000\000"
+        .quad   <&T as core::fmt::Debug>::fmt
+
+.L__unnamed_21:
+        .ascii  "test"
+
+.L__unnamed_20:
+        .ascii  "action_true"
+
+.L__unnamed_19:
+        .ascii  "action_false"
+
+.L__unnamed_5:
+        .ascii  "Multiply"
+
+.L__unnamed_4:
+        .quad   core::ptr::drop_in_place<&i64>
+        .asciz  "\b\000\000\000\000\000\000\000\b\000\000\000\000\000\000"
+        .quad   <&T as core::fmt::Debug>::fmt
+
+.L__unnamed_6:
+        .ascii  "Add"
+
+.L__unnamed_1:
+        .ascii  "Const"
+
+.L__unnamed_3:
+        .ascii  "Old"
+
+DW.ref.rust_eh_personality:
+        .quad   rust_eh_personality
