@@ -3,6 +3,7 @@
 #![feature(ptr_as_uninit)]
 #![feature(result_flattening)]
 #![feature(byte_slice_trim_ascii)]
+#![feature(result_option_inspect)]
 
 use std::collections::btree_map::BTreeMap;
 
