@@ -103,27 +103,33 @@ fn main() -> Result<()> {
                 .collect()
         };
         let mut total = Duration::ZERO;
-        let n = 10000;
-        println!("Samples: {n}");
+        let duration_per_test = Duration::from_millis(500);
+        let sample_chunk = 100;
         for i in which {
             let day = &solutions[i];
             println!("Day {}", i + 1);
             for (name, solution) in day {
-                let tic = Instant::now();
-                for _ in 0..n {
-                    solution();
+                let mut samples = 0;
+                let mut elapsed = Duration::ZERO;
+                while elapsed < duration_per_test {
+                    let tic = Instant::now();
+                    for _ in 0..sample_chunk {
+                        solution();
+                    }
+                    let chunk_elapsed = tic.elapsed();
+                    elapsed += chunk_elapsed;
+                    samples += sample_chunk;
                 }
-                let elapsed = tic.elapsed();
-                total += elapsed;
+                total += elapsed / samples;
                 println!(
-                    "{name} computed in {}µs",
-                    elapsed.as_nanos() as f64 / 1000.0 / n as f64
+                    "{name} computed in {}µs ({samples} samples)",
+                    elapsed.as_nanos() as f64 / 1000.0 / samples as f64
                 );
             }
             println!("");
         }
 
-        println!("Total: {}µs", total.as_nanos() as f64 / 1000.0 / n as f64);
+        println!("Total: {}µs", total.as_nanos() as f64 / 1000.0 as f64);
         return Ok(());
     }
     let which: usize = which.parse()?;
