@@ -61,7 +61,7 @@ fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
 
     let mut grid = Vec2D {
         v: vec![Block::Air; ((2 + max_y + 2) * (source.0 + 2 * max_y + 1)) as usize],
-        stride: (2 + max_y + 2),
+        stride: (source.0 + 2 * max_y + 1),
     };
 
     for scan in scans {
@@ -73,7 +73,7 @@ fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
                     }
 
                     for x in x1..=x2 {
-                        grid[(y1, x)] = Block::Rock;
+                        grid[(x, y1)] = Block::Rock;
                     }
                 } else if x1 == x2 {
                     if y2 < y1 {
@@ -81,7 +81,7 @@ fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
                     }
 
                     for y in y1..=y2 {
-                        grid[(y, x1)] = Block::Rock;
+                        grid[(x1, y)] = Block::Rock;
                     }
                 } else {
                     panic!()
@@ -105,7 +105,7 @@ fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
         loop {
             let mut any = false;
             for dir in [0, -1, 1] {
-                if grid[(sand_pos.1 + 1, sand_pos.0 + dir)] == Block::Air {
+                if grid[(sand_pos.0 + dir, sand_pos.1 + 1)] == Block::Air {
                     sand_pos.1 += 1;
                     sand_pos.0 += dir;
                     any = true;
@@ -113,7 +113,7 @@ fn solve(mut scans: Vec<Vec<(i64, i64)>>, add_floor: bool) -> i64 {
                 }
             }
             if !any {
-                grid[(sand_pos.1, sand_pos.0)] = Block::Sand;
+                grid[sand_pos] = Block::Sand;
                 collisions.pop();
                 break;
             }

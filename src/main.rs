@@ -107,7 +107,7 @@ fn main() -> Result<()> {
                 .collect()
         };
         let mut total = Duration::ZERO;
-        let duration_per_test = Duration::from_millis(500);
+        let duration_per_test = Duration::from_millis(5000);
         let sample_chunk = 100;
         for i in which.iter() {
             let day = &solutions[*i];
