@@ -19,6 +19,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 mod error;
 mod util;
 
@@ -84,6 +85,7 @@ fn main() -> Result<()> {
         dynfns!(day11::solve_a, day11::solve_b),
         dynfns!(day12::solve_a, day12::solve_b),
         dynfns!(day13::solve_a, day13::solve_b),
+        dynfns!(day14::solve_a, day14::solve_b),
     ];
 
     let mut args = std::env::args();

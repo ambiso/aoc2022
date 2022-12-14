@@ -1,6 +1,6 @@
 use crate::error::Result;
 use std::{
-    collections::{BTreeSet, HashMap, HashSet},
+    collections::{BTreeSet, HashMap},
     io::BufRead,
 };
 

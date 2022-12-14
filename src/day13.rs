@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
 
-use nom::{multi::separated_list0, bytes::complete::tag, IResult, sequence::{delimited, tuple}, combinator::{map, opt}, branch::alt, character::complete::{newline, space1}};
+use nom::{multi::separated_list0, bytes::complete::tag, IResult, sequence::{delimited, tuple}, combinator::{map}, branch::alt, character::complete::{newline}};
 
 use crate::{error::Result, util::parse_num};
 
