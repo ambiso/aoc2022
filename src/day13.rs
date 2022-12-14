@@ -1,6 +1,14 @@
 use std::cmp::Ordering;
 
-use nom::{multi::separated_list0, bytes::complete::tag, IResult, sequence::{delimited, tuple}, combinator::{map}, branch::alt, character::complete::{newline}};
+use nom::{
+    branch::alt,
+    bytes::complete::tag,
+    character::complete::newline,
+    combinator::map,
+    multi::separated_list0,
+    sequence::{delimited, tuple},
+    IResult,
+};
 
 use crate::{error::Result, util::parse_num};
 
@@ -14,15 +22,24 @@ enum Item {
 }
 
 fn parse_list(i: &[u8]) -> IResult<&[u8], List> {
-    delimited(tag(b"["), map(separated_list0(tag(b","), parse_item), List), tag(b"]"))(i)
+    delimited(
+        tag(b"["),
+        map(separated_list0(tag(b","), parse_item), List),
+        tag(b"]"),
+    )(i)
 }
 
 fn parse_item(i: &[u8]) -> IResult<&[u8], Item> {
-    alt((map(parse_list, |x| Item::List(x.0)), map(parse_num, Item::Int)))(i)
+    alt((
+        map(parse_list, |x| Item::List(x.0)),
+        map(parse_num, Item::Int),
+    ))(i)
 }
 
 fn parse_pair(i: &[u8]) -> IResult<&[u8], (Item, Item)> {
-    map(tuple((parse_list, newline, parse_list)), |(a, _, b)| (Item::List(a.0), Item::List(b.0)))(i)
+    map(tuple((parse_list, newline, parse_list)), |(a, _, b)| {
+        (Item::List(a.0), Item::List(b.0))
+    })(i)
 }
 
 fn parse_pairs(i: &[u8]) -> IResult<&[u8], Vec<(Item, Item)>> {
@@ -30,16 +47,17 @@ fn parse_pairs(i: &[u8]) -> IResult<&[u8], Vec<(Item, Item)>> {
 }
 
 fn parse_packets(i: &[u8]) -> IResult<&[u8], Vec<Item>> {
-    separated_list0(alt((map(tuple((newline, newline)), |_| ()), map(newline, |_| ()))), map(parse_list, |x| Item::List(x.0)))(i)
+    separated_list0(
+        alt((map(tuple((newline, newline)), |_| ()), map(newline, |_| ()))),
+        map(parse_list, |x| Item::List(x.0)),
+    )(i)
 }
 
 impl PartialOrd for Item {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         match (self, other) {
             (Item::Int(a), Item::Int(b)) => a.partial_cmp(b),
-            (Item::List(a), Item::List(b)) => {
-                a.partial_cmp(b)
-            },
+            (Item::List(a), Item::List(b)) => a.partial_cmp(b),
             (Item::Int(a), b) => Item::List(vec![Item::Int(*a)]).partial_cmp(b),
             (a, Item::Int(b)) => a.partial_cmp(&Item::List(vec![Item::Int(*b)])),
         }
@@ -70,7 +88,7 @@ pub fn solve_a() -> Result<i64> {
     let mut idx_sum = 0;
     for (i, (l, r)) in parse_pairs(&f[..]).unwrap().1.iter().enumerate() {
         if l < r {
-            idx_sum += (i+1) as i64;
+            idx_sum += (i + 1) as i64;
         }
     }
     Ok(idx_sum)
@@ -86,7 +104,7 @@ pub fn solve_b() -> Result<i64> {
     packets.sort();
     let a = packets.iter().position(|x| *x == two).unwrap() as i64 + 1;
     let b = packets.iter().position(|x| *x == six).unwrap() as i64 + 1;
-    Ok(a*b)
+    Ok(a * b)
 }
 
 #[cfg(test)]

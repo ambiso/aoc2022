@@ -173,7 +173,10 @@ pub fn solve<const DIV: bool>(n: i64) -> Result<i64> {
     let n = n - mu;
     let skipped_cycles = n / lam;
     let skipped_iters = skipped_cycles * lam;
-    inspections_tortoise.iter_mut().zip(inspections_hare.iter()).for_each(|(x, y)| *x += *y * skipped_cycles);
+    inspections_tortoise
+        .iter_mut()
+        .zip(inspections_hare.iter())
+        .for_each(|(x, y)| *x += *y * skipped_cycles);
     let iters_left = n - skipped_iters;
     for _ in 0..iters_left {
         sim_round::<DIV>(&mut tortoise, &mut inspections_tortoise, modulus);
@@ -181,7 +184,8 @@ pub fn solve<const DIV: bool>(n: i64) -> Result<i64> {
 
     inspections_tortoise.sort();
 
-    Ok(inspections_tortoise[inspections_tortoise.len() - 1] * inspections_tortoise[inspections_tortoise.len() - 2])
+    Ok(inspections_tortoise[inspections_tortoise.len() - 1]
+        * inspections_tortoise[inspections_tortoise.len() - 2])
 }
 
 pub fn solve_a() -> Result<i64> {
