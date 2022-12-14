@@ -4,7 +4,7 @@ use std::{
     io::BufRead,
 };
 
-#[derive(PartialEq, Eq, Debug, PartialOrd, Ord)]
+#[derive(PartialEq, Eq, Debug, PartialOrd, Ord, Copy, Clone)]
 struct Node {
     priority: i64,
     steps: i64,
@@ -15,14 +15,20 @@ fn l_infty(a: (i64, i64), b: (i64, i64)) -> i64 {
     (a.0 - b.0).abs() + (a.1 - b.1).abs()
 }
 
-fn pathfind(m: &Vec<Vec<u8>>, start: (i64, i64), target: (i64, i64)) -> Option<i64> {
+fn pathfind(
+    m: &Vec<Vec<u8>>,
+    start: (i64, i64),
+    target: impl Fn(Node) -> bool,
+    target_heuristic: impl Fn((i64, i64), Node) -> i64,
+    height_check_inverse: bool,
+) -> Option<i64> {
     let mut heap = BTreeSet::new();
-    let mut costs = HashMap::new();
 
+    let mut costs = HashMap::new();
     // let mut visited = HashSet::new();
 
     heap.insert(Node {
-        priority: l_infty(start, target),
+        priority: 0,
         steps: 0,
         pos: start,
     });
@@ -31,7 +37,7 @@ fn pathfind(m: &Vec<Vec<u8>>, start: (i64, i64), target: (i64, i64)) -> Option<i
     while let Some(item) = heap.pop_first() {
         // visited.insert(item.pos);
 
-        if item.pos == target {
+        if target(item) {
             return Some(item.steps);
         }
 
@@ -46,9 +52,14 @@ fn pathfind(m: &Vec<Vec<u8>>, start: (i64, i64), target: (i64, i64)) -> Option<i
                 let h2 = m[newpos.1 as usize][newpos.0 as usize];
                 let n = Node {
                     pos: newpos,
-                    priority: l_infty(newpos, target) + item.steps + 1,
+                    priority: target_heuristic(newpos, item),
                     steps: item.steps + 1,
                 };
+                let mut h = h;
+                let mut h2 = h2;
+                if height_check_inverse {
+                    std::mem::swap(&mut h, &mut h2);
+                }
                 if h2 <= h + 1 {
                     if !costs.contains_key(&newpos) || costs[&newpos] > n.steps {
                         costs.insert(newpos, n.steps);
@@ -122,23 +133,26 @@ fn parse_input() -> Result<Input> {
 
 pub fn solve_a() -> Result<i64> {
     let input = parse_input()?;
-    let steps = pathfind(&input.m, input.start, input.target);
+    let steps = pathfind(
+        &input.m,
+        input.start,
+        |x| x.pos == input.target,
+        |newpos, item| l_infty(newpos, input.target) + item.steps + 1,
+        false,
+    );
     Ok(steps.unwrap())
 }
 
 pub fn solve_b() -> Result<i64> {
     let input = parse_input()?;
-    let mut min_steps = i64::MAX;
-    for y in 0..input.m.len() {
-        for x in 0..input.m[0].len() {
-            if input.m[y][x] == 'a' as u8 {
-                if let Some(steps) = pathfind(&input.m, (x as i64, y as i64), input.target) {
-                    min_steps = min_steps.min(steps);
-                }
-            }
-        }
-    }
-    Ok(min_steps)
+    Ok(pathfind(
+        &input.m,
+        input.target,
+        |n| input.m[n.pos.1 as usize][n.pos.0 as usize] == 'a' as u8,
+        |_newpos, item| item.steps,
+        true,
+    )
+    .unwrap())
 }
 
 #[cfg(test)]
