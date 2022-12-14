@@ -5,6 +5,7 @@
 #![feature(byte_slice_trim_ascii)]
 
 use std::collections::btree_map::BTreeMap;
+use std::collections::HashMap;
 
 mod day01;
 mod day02;
@@ -66,32 +67,35 @@ macro_rules! dynfns {
 }
 
 fn main() -> Result<()> {
-    let solutions: Vec<BTreeMap<_, Box<dyn Fn() -> Box<dyn Debug>>>> = vec![
-        dynfns!(day01::solve_a),
-        dynfns!(
-            day02::solve_a,
-            day02::solve_b,
-            day02::solve_b_opt,
-            day02::solve_b_opt_2
-        ),
-        dynfns!(day03::solve_a, day03::solve_b),
-        dynfns!(day04::solve_a),
-        dynfns!(day05::solve_a, day05::solve_b),
-        dynfns!(day06::solve_a, day06::solve_b),
-        dynfns!(day07::solve_a, day07::solve_b),
-        dynfns!(day08::solve_a, day08::solve_b, day08::solve_a_opt),
-        dynfns!(day09::solve_a, day09::solve_b),
-        dynfns!(day10::solve_a, day10::solve_b),
-        dynfns!(day11::solve_a, day11::solve_b),
-        dynfns!(day12::solve_a, day12::solve_b),
-        dynfns!(day13::solve_a, day13::solve_b),
-        dynfns!(day14::solve_a, day14::solve_b),
+    let solutions: Vec<Vec<BTreeMap<_, Box<dyn Fn() -> Box<dyn Debug>>>>> = vec![
+        vec![dynfns!(day01::solve_a)],
+        vec![
+            dynfns!(day02::solve_a),
+            dynfns!(day02::solve_b, day02::solve_b_opt, day02::solve_b_opt_2),
+        ],
+        vec![dynfns!(day03::solve_a), dynfns!(day03::solve_b)],
+        vec![dynfns!(day04::solve_a)],
+        vec![dynfns!(day05::solve_a), dynfns!(day05::solve_b)],
+        vec![dynfns!(day06::solve_a), dynfns!(day06::solve_b)],
+        vec![dynfns!(day07::solve_a), dynfns!(day07::solve_b)],
+        vec![
+            dynfns!(day08::solve_a),
+            dynfns!(day08::solve_b, day08::solve_a_opt),
+        ],
+        vec![dynfns!(day09::solve_a), dynfns!(day09::solve_b)],
+        vec![dynfns!(day10::solve_a), dynfns!(day10::solve_b)],
+        vec![dynfns!(day11::solve_a), dynfns!(day11::solve_b)],
+        vec![dynfns!(day12::solve_a), dynfns!(day12::solve_b)],
+        vec![dynfns!(day13::solve_a), dynfns!(day13::solve_b)],
+        vec![dynfns!(day14::solve_a), dynfns!(day14::solve_b)],
     ];
 
     let mut args = std::env::args();
     args.next().unwrap();
     let which = args.next().unwrap_or("1".to_string());
+
     if which == "bench" {
+        let mut results = HashMap::new();
         let which = args.next().unwrap_or("all".to_string());
         let which = which.split(",").collect::<Vec<_>>();
         let which: Vec<_> = if which[0] == "all" {
@@ -105,37 +109,73 @@ fn main() -> Result<()> {
         let mut total = Duration::ZERO;
         let duration_per_test = Duration::from_millis(500);
         let sample_chunk = 100;
-        for i in which {
-            let day = &solutions[i];
-            println!("Day {}", i + 1);
-            for (name, solution) in day {
-                let mut samples = 0;
-                let mut elapsed = Duration::ZERO;
-                while elapsed < duration_per_test {
-                    let tic = Instant::now();
-                    for _ in 0..sample_chunk {
-                        solution();
+        for i in which.iter() {
+            let day = &solutions[*i];
+            let day_no = i + 1;
+            println!("Day {}", day_no);
+            for (part_no, part) in day.iter().enumerate() {
+                let part_no = part_no + 1;
+                for (name, solution) in part {
+                    let mut samples = 0;
+                    let mut elapsed = Duration::ZERO;
+                    while elapsed < duration_per_test {
+                        let tic = Instant::now();
+                        for _ in 0..sample_chunk {
+                            solution();
+                        }
+                        let chunk_elapsed = tic.elapsed();
+                        elapsed += chunk_elapsed;
+                        samples += sample_chunk;
                     }
-                    let chunk_elapsed = tic.elapsed();
-                    elapsed += chunk_elapsed;
-                    samples += sample_chunk;
+                    let avg = elapsed / samples;
+                    results
+                        .entry((day_no, part_no))
+                        .and_modify(|x| {
+                            if *x > avg {
+                                *x = avg;
+                            }
+                        })
+                        .or_insert(avg);
+                    total += avg;
+                    println!(
+                        "{name} computed in {:.02}µs ({samples} samples)",
+                        avg.as_nanos() as f64 / 1000.0
+                    );
                 }
-                total += elapsed / samples;
-                println!(
-                    "{name} computed in {}µs ({samples} samples)",
-                    elapsed.as_nanos() as f64 / 1000.0 / samples as f64
-                );
             }
             println!("");
         }
 
-        println!("Total: {}µs", total.as_nanos() as f64 / 1000.0 as f64);
+        println!("Total: {}µs", total.as_nanos() as f64 / 1000.0);
+        println!("");
+        println!("");
+        println!("Day     Part 1      Part 2");
+
+        let mut total_best = Duration::ZERO;
+        for i in which.iter() {
+            let day_no = i + 1;
+            print!("{: >2}", day_no);
+            for part_no in [1, 2] {
+                match results.get(&(day_no, part_no)) {
+                    Some(x) => {
+                        total_best += *x;
+                        print!("  {: >8.02}µs", x.as_nanos() as f64 / 1000.0);
+                    }
+                    None => {
+                        print!("         n/a");
+                    }
+                }
+            }
+            println!("");
+        }
+        println!("");
+        println!("Total: {}µs", total_best.as_nanos() as f64 / 1000.0);
         return Ok(());
     }
     let which: usize = which.parse()?;
     let which_sub: usize = args.next().unwrap_or("0".to_string()).parse()?;
 
-    let (_, f) = solutions[which - 1].iter().nth(which_sub).unwrap();
+    let (_, f) = solutions[which - 1][which_sub].iter().nth(0).unwrap();
     let tic = Instant::now();
     let res = f();
     let elapsed = tic.elapsed();
