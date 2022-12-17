@@ -2,9 +2,9 @@ use std::collections::HashMap;
 
 use crate::error::Result;
 
-fn solve(graph: Vec<Vec<usize>>, node_values: Vec<i64>) -> i64 {
+fn solve(graph: Vec<Vec<usize>>, node_values: Vec<i64>, node: usize) -> i64 {
     let mut cache = HashMap::new();
-    solve_internal(&mut cache, &graph, 0, 30, node_values)
+    solve_internal(&mut cache, &graph, node, 30, node_values)
 }
 
 fn solve_internal(
@@ -20,6 +20,7 @@ fn solve_internal(
     if cache.contains_key(&(node, time_left, node_values.clone())) {
         cache[&(node, time_left, node_values)]
     } else {
+        // substructure: visit neighbors with 1 less time, or open valve of current node
         let mut max_val = 0;
         for neigh in &graph[node] {
             // move to that node and solve subproblem
@@ -32,19 +33,21 @@ fn solve_internal(
             ));
         }
         // open current node
-        let mut node_values_prime = node_values.clone();
-        node_values_prime[node] = 0;
-        max_val = max_val.max(
-            solve_internal(cache, graph, node, time_left - 1, node_values_prime)
-                + node_values[node] * (time_left - 1),
-        );
+        if node_values[node] != 0 {
+            let mut node_values_prime = node_values.clone();
+            node_values_prime[node] = 0;
+            max_val = max_val.max(
+                solve_internal(cache, graph, node, time_left - 1, node_values_prime)
+                    + node_values[node] * (time_left - 1),
+            );
+        }
 
         cache.insert((node, time_left, node_values), max_val);
         max_val
     }
 }
 
-fn parse_input() -> Result<(Vec<Vec<usize>>, Vec<i64>)> {
+fn parse_input() -> Result<(Vec<Vec<usize>>, Vec<i64>, HashMap<String, usize>)> {
     let f = String::from_utf8(std::fs::read("inputs/day16a")?)?;
     let mut name_map = HashMap::new();
 
@@ -55,11 +58,7 @@ fn parse_input() -> Result<(Vec<Vec<usize>>, Vec<i64>)> {
         let split: Vec<_> = l.split(" ").collect();
         let x = split[4].split("=").collect::<Vec<_>>();
         node_values.push(x[1].split(";").next().unwrap().parse::<i64>().unwrap());
-        name_map.insert(split[1], i);
-        // if nid >= node_values.len() {
-        //     node_values.push(nid);
-        //     assert_eq!(node_count, node_values.len());
-        // }
+        name_map.insert(split[1].to_string(), i);
     }
     for l in f.lines() {
         let split: Vec<_> = l.split(" ").collect();
@@ -72,13 +71,12 @@ fn parse_input() -> Result<(Vec<Vec<usize>>, Vec<i64>)> {
         );
     }
 
-    Ok((graph, node_values))
+    Ok((graph, node_values, name_map))
 }
 
 pub fn solve_a() -> Result<i64> {
-    // substructure: f(where I am, how much time is left, values of the (modified) graph)
-    let (graph, node_values) = parse_input()?;
-    let s = solve(graph, node_values);
+    let (graph, node_values, name_map) = parse_input()?;
+    let s = solve(graph, node_values, name_map[&"AA".to_string()]);
 
     Ok(s)
 }
