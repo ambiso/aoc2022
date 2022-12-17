@@ -26,6 +26,10 @@ pub fn parse_num(i: &[u8]) -> IResult<&[u8], i64> {
     )(i)
 }
 
+pub fn l_infty(a: (i64, i64), b: (i64, i64)) -> i64 {
+    (a.0 - b.0).abs() + (a.1 - b.1).abs()
+}
+
 pub struct Vec2D<T> {
     pub v: Vec<T>,
     pub stride: i64,

@@ -21,9 +21,11 @@ mod day11;
 mod day12;
 mod day13;
 mod day14;
+mod day15;
 mod error;
 mod util;
 
+use std::hint::black_box;
 use std::{
     fmt::Debug,
     time::{Duration, Instant},
@@ -88,6 +90,7 @@ fn main() -> Result<()> {
         vec![dynfns!(day12::solve_a), dynfns!(day12::solve_b)],
         vec![dynfns!(day13::solve_a), dynfns!(day13::solve_b)],
         vec![dynfns!(day14::solve_a), dynfns!(day14::solve_b)],
+        vec![dynfns!(day15::solve_a), dynfns!(day15::solve_b)],
     ];
 
     let mut args = std::env::args();
@@ -121,7 +124,7 @@ fn main() -> Result<()> {
                     while elapsed < duration_per_test {
                         let tic = Instant::now();
                         for _ in 0..sample_chunk {
-                            solution();
+                            black_box(solution());
                         }
                         let chunk_elapsed = tic.elapsed();
                         elapsed += chunk_elapsed;

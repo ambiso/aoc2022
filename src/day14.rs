@@ -1,5 +1,3 @@
-use std::time::Instant;
-
 use nom::{
     bytes::complete::tag, character::complete::newline, combinator::map, multi::separated_list0,
     sequence::tuple, IResult,

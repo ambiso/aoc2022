@@ -1,4 +1,5 @@
 use crate::error::Result;
+use crate::util::l_infty;
 use std::{
     collections::{BTreeSet, HashMap},
     io::BufRead,
@@ -9,10 +10,6 @@ struct Node {
     priority: i64,
     steps: i64,
     pos: (i64, i64),
-}
-
-fn l_infty(a: (i64, i64), b: (i64, i64)) -> i64 {
-    (a.0 - b.0).abs() + (a.1 - b.1).abs()
 }
 
 fn pathfind(
