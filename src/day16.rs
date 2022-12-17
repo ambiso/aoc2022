@@ -1,5 +1,6 @@
 use crate::error::Result;
 pub fn solve_a() -> Result<i64> {
+    // substructure: f(where I am, how much time is left, values of the (modified) graph)
     Ok(0)
 }
 
