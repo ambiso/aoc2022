@@ -1,6 +1,6 @@
 use lazy_static::lazy_static;
 use regex::bytes::Regex;
-use std::{collections::HashSet, io::BufRead, ops::{RangeInclusive}};
+use std::{collections::HashSet, io::BufRead, ops::RangeInclusive};
 
 lazy_static! {
     static ref RE: Regex = Regex::new("=(-?[0-9]+)").unwrap();
@@ -75,7 +75,9 @@ impl Interval<i64> for RangeInclusive<i64> {
         if self.start() > self.end() || other.start() > other.end() {
             return None;
         }
-        if (*self.start() <= other.end() + 1i64 && self.start() >= other.start()) || (*self.end() + 1i64 >= *other.start() && self.start() <= other.start()) {
+        if (*self.start() <= other.end() + 1i64 && self.start() >= other.start())
+            || (*self.end() + 1i64 >= *other.start() && self.start() <= other.start())
+        {
             Some(*self.start().min(other.start())..=*self.end().max(other.end()))
         } else {
             None
@@ -112,9 +114,14 @@ pub fn solve_b() -> Result<i64> {
             }
         }
         if intervals.len() != 1 {
-            let mut p = [intervals[0].start(), intervals[0].end(), intervals[1].start(), intervals[1].end()];
+            let mut p = [
+                intervals[0].start(),
+                intervals[0].end(),
+                intervals[1].start(),
+                intervals[1].end(),
+            ];
             p.sort();
-            let x = p[1]+1;
+            let x = p[1] + 1;
             return Ok(x as i64 * (n as i64 - 1) + y);
         }
     }

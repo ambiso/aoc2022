@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashSet, VecDeque};
 
 use crate::error::Result;
 
@@ -9,11 +9,42 @@ enum Collision {
     Floor,
 }
 
-fn check_collision(
-    rock: &[(i64, i64)],
-    map: &HashSet<(i64, i64)>,
-    offset: (i64, i64),
-) -> Collision {
+struct Map {
+    m: VecDeque<[bool; 7]>,
+    height_offset: usize,
+}
+
+impl Map {
+    fn new() -> Self {
+        Self {
+            m: VecDeque::new(),
+            height_offset: 0,
+        }
+    }
+    fn get(&self, pos: (i64, i64)) -> bool {
+        self.m
+            .get(pos.1 as usize - self.height_offset)
+            .map(|line| line[pos.0 as usize])
+            .unwrap_or(false)
+    }
+
+    fn insert(&mut self, pos: (i64, i64)) {
+        let max_height = self.m.len() as i64 + self.height_offset as i64 - 1;
+        if pos.1 > max_height {
+            let missing = pos.1 as usize + 1 - max_height as usize;
+            self.m.extend(vec![[false; 7]; missing]);
+        }
+        self.m[pos.1 as usize - self.height_offset][pos.0 as usize] = true;
+    }
+
+    fn clear_lines(&mut self, height: i64) {
+        let cleared = height as usize-self.height_offset;
+        self.m.drain(0..cleared);
+        self.height_offset += cleared;
+    }
+}
+
+fn check_collision(rock: &[(i64, i64)], map: &Map, offset: (i64, i64)) -> Collision {
     for subrock in rock {
         let (x, y) = (subrock.0 + offset.0, subrock.1 + offset.1);
         if x < 0 || x >= 7 {
@@ -22,7 +53,7 @@ fn check_collision(
         if y < 0 {
             return Collision::Floor;
         }
-        if map.contains(&(x, y)) {
+        if map.get((x, y)) {
             return Collision::Rock;
         }
     }
@@ -30,7 +61,7 @@ fn check_collision(
 }
 
 pub fn solve_a() -> Result<i64> {
-    let mut map = HashSet::new();
+    let mut map = Map::new();
 
     let rock_formations: [&[(i64, i64)]; 5] = [
         &[(2i64, 0), (3, 0), (4, 0), (5, 0)],
@@ -70,6 +101,9 @@ pub fn solve_a() -> Result<i64> {
                         let pos = (e.0 + rock_pos.0, e.1 + rock_pos.1);
                         highest_pos = highest_pos.max(pos.1);
                         map.insert(pos);
+                        if (0..7).all(|x| map.get((x, pos.1))) {
+                            map.clear_lines(pos.1);
+                        }
                     }
                     break;
                 }
@@ -87,9 +121,9 @@ pub fn solve_a() -> Result<i64> {
         //     }
         //     println!("");
         // }
-        // if rock_id + 1 == 2022 {
-        //     return Ok(highest_pos+1);
-        // }
+        if rock_id + 1 == 2022 {
+            return Ok(highest_pos+1);
+        }
     }
     unreachable!()
 }
@@ -104,7 +138,7 @@ mod test {
 
     #[test]
     fn test_a() {
-        assert_eq!(solve_a().unwrap(), 5256611);
+        assert_eq!(solve_a().unwrap(), 3232);
     }
 
     #[test]
