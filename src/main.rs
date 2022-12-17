@@ -83,8 +83,8 @@ fn main() -> Result<()> {
         vec![dynfns!(day06::solve_a), dynfns!(day06::solve_b)],
         vec![dynfns!(day07::solve_a), dynfns!(day07::solve_b)],
         vec![
-            dynfns!(day08::solve_a),
-            dynfns!(day08::solve_b, day08::solve_a_opt),
+            dynfns!(day08::solve_a, day08::solve_a_opt),
+            dynfns!(day08::solve_b),
         ],
         vec![dynfns!(day09::solve_a), dynfns!(day09::solve_b)],
         vec![dynfns!(day10::solve_a), dynfns!(day10::solve_b)],
