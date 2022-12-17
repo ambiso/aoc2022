@@ -31,14 +31,14 @@ impl Map {
     fn insert(&mut self, pos: (i64, i64)) {
         let max_height = self.m.len() as i64 + self.height_offset as i64 - 1;
         if pos.1 > max_height {
-            let missing = pos.1 as usize + 1 - max_height as usize;
-            self.m.extend(vec![[false; 7]; missing]);
+            let missing = (pos.1 + 1 - max_height) as usize;
+            self.m.extend([[false; 7]].iter().cycle().take(missing));
         }
         self.m[pos.1 as usize - self.height_offset][pos.0 as usize] = true;
     }
 
     fn clear_lines(&mut self, height: i64) {
-        let cleared = height as usize-self.height_offset;
+        let cleared = height as usize - self.height_offset;
         self.m.drain(0..cleared);
         self.height_offset += cleared;
     }
@@ -122,7 +122,7 @@ pub fn solve_a() -> Result<i64> {
         //     println!("");
         // }
         if rock_id + 1 == 2022 {
-            return Ok(highest_pos+1);
+            return Ok(highest_pos + 1);
         }
     }
     unreachable!()
