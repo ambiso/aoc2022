@@ -286,7 +286,8 @@ pub fn solve_b() -> Result<i64> {
     let move_id_diff = s2.move_id as i64 - s.move_id as i64;
 
     s.m.height_offset += (height_difference * skipped_cycles) as usize;
-    s.move_id = (s.move_id as i64 + move_id_diff * skipped_cycles).rem_euclid(movements.len() as i64) as usize;
+    s.move_id = (s.move_id as i64 + move_id_diff * skipped_cycles)
+        .rem_euclid(movements.len() as i64) as usize;
     s.rock_id = (s.rock_id + skipped_iters as usize) % rock_formations.len();
 
     let new_iters = cycle.offset + skipped_cycles * cycle.length;
