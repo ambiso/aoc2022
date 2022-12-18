@@ -1,4 +1,4 @@
-use std::collections::{VecDeque, HashSet, BTreeSet};
+use std::collections::{BTreeSet, HashSet};
 
 use crate::error::Result;
 pub fn solve_a() -> Result<i64> {
