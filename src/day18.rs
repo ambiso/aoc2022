@@ -79,8 +79,6 @@ pub fn solve_b() -> Result<i64> {
         }
     }
 
-    dbg!(reachable);
-
     let mut surface = 0;
     for c in coords {
         for d in [-1, 1] {
