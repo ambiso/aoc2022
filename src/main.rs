@@ -3,6 +3,7 @@
 #![feature(ptr_as_uninit)]
 #![feature(result_flattening)]
 #![feature(byte_slice_trim_ascii)]
+#![feature(iter_collect_into)]
 
 use std::collections::btree_map::BTreeMap;
 use std::collections::HashMap;
@@ -24,6 +25,7 @@ mod day14;
 mod day15;
 mod day16;
 mod day17;
+mod day18;
 mod error;
 mod util;
 
@@ -95,6 +97,7 @@ fn main() -> Result<()> {
         vec![dynfns!(day15::solve_a), dynfns!(day15::solve_b)],
         vec![dynfns!(day16::solve_a), dynfns!(day16::solve_b)],
         vec![dynfns!(day17::solve_a), dynfns!(day17::solve_b)],
+        vec![dynfns!(day18::solve_a), dynfns!(day18::solve_b)],
     ];
 
     let mut args = std::env::args();
