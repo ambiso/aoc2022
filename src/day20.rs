@@ -18,11 +18,7 @@ fn solve(m: i64, n: i64) -> Result<i64> {
             let mut j = p as i64;
             let mut off = input[mixed[p]] % (input.len() - 1) as i64;
 
-            let alt = if off >= 0 {
-                -(input.len() as i64 - off.abs() - 1)
-            } else {
-                input.len() as i64 - off.abs() - 1
-            };
+            let alt = off.signum() * (input.len() as i64 - off.abs() - 1);
             if off.abs() > alt.abs() {
                 off = alt;
             }
