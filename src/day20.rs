@@ -16,6 +16,15 @@ fn solve(m: i64, n: i64) -> Result<i64> {
             let p = mixed.iter().position(|x| x.0 == i).unwrap();
             let mut j = p as i64;
             let mut off = mixed[p].1 % (input.len() - 1) as i64;
+
+            let alt = if off >= 0 {
+                -(input.len() as i64 - off.abs() - 1)
+            } else {
+                input.len() as i64 - off.abs() - 1
+            };
+            if off.abs() > alt.abs() {
+                off = alt;
+            }
             while off != 0 {
                 let new_j = (j + off.signum()).rem_euclid(mixed.len() as i64);
                 mixed.swap(j as usize, new_j as usize);
