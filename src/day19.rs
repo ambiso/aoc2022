@@ -31,7 +31,7 @@ lazy_static! {
 struct Blueprint([Cost; 4]);
 
 fn parse_input() -> Result<Vec<Blueprint>> {
-    let i = read_string("inputs/day19x")?;
+    let i = read_string("inputs/day19a")?;
     Ok(RE
         .captures_iter(i.as_str())
         .map(|c| {
@@ -194,14 +194,14 @@ pub fn solve_a() -> Result<i64> {
     Ok(i.par_iter()
         .map(|bp| solve_bp(bp, 24))
         .enumerate()
-        .map(|(i, v)| dbg!(i + 1) as i64 * v)
+        .map(|(i, v)| (i + 1) as i64 * v)
         .sum::<i64>())
 }
 pub fn solve_b() -> Result<i64> {
     let i = parse_input()?;
     let i = &i[0..3.min(i.len())];
     Ok(i.par_iter()
-        .map(|bp| dbg!(solve_bp(bp, 32)))
+        .map(|bp| solve_bp(bp, 32))
         .product::<i64>())
 }
 

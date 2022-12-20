@@ -4,12 +4,23 @@ use nom::combinator::{map, opt};
 use nom::sequence::tuple;
 use nom::IResult;
 use std::ops::{Index, IndexMut};
+use std::time::Duration;
 
 use crate::error::Result;
 use std::fs;
 use std::path::Path;
 pub fn read_string(path: impl AsRef<Path>) -> Result<String> {
     Ok(String::from_utf8(fs::read(path)?)?)
+}
+
+pub fn format_duration(d: Duration) -> String {
+    if d.as_secs() > 0 {
+        format!("{:.02}s ", d.as_millis() as f64 / 1000.0)
+    } else if d.as_millis() > 0 {
+        format!("{:.02}ms", d.as_nanos() as f64 / 1000.0 / 1000.0)
+    } else {
+        format!("{:.02}µs", d.as_nanos() as f64 / 1000.0)
+    }
 }
 
 pub fn parse_num(i: &[u8]) -> IResult<&[u8], i64> {

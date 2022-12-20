@@ -31,6 +31,7 @@ mod day20;
 mod error;
 mod util;
 
+use util::format_duration;
 use std::hint::black_box;
 use std::{
     fmt::Debug,
@@ -122,7 +123,7 @@ fn main() -> Result<()> {
         };
         let mut total = Duration::ZERO;
         let duration_per_test = Duration::from_millis(5000);
-        let sample_chunk = 100;
+        let sample_chunk = 1;
         for i in which.iter() {
             let day = &solutions[*i];
             let day_no = i + 1;
@@ -132,6 +133,15 @@ fn main() -> Result<()> {
                 for (name, solution) in part {
                     let mut samples = 0;
                     let mut elapsed = Duration::ZERO;
+                    let tic = Instant::now();
+                    for _ in 0..sample_chunk {
+                        black_box(solution());
+                    }
+                    let single_sample = tic.elapsed();
+                    elapsed += single_sample;
+                    samples += 1;
+
+                    let sample_chunk = 1.max((duration_per_test.as_nanos() / single_sample.as_nanos() / 10) as u32);
                     while elapsed < duration_per_test {
                         let tic = Instant::now();
                         for _ in 0..sample_chunk {
@@ -152,15 +162,15 @@ fn main() -> Result<()> {
                         .or_insert(avg);
                     total += avg;
                     println!(
-                        "{name} computed in {:.02}µs ({samples} samples)",
-                        avg.as_nanos() as f64 / 1000.0
+                        "{name} computed in {} ({samples} samples)",
+                        format_duration(avg)
                     );
                 }
             }
             println!("");
         }
 
-        println!("Total: {}µs", total.as_nanos() as f64 / 1000.0);
+        println!("Total: {}", format_duration(total));
         println!("");
         println!("");
         println!("Day     Part 1      Part 2");
@@ -173,7 +183,7 @@ fn main() -> Result<()> {
                 match results.get(&(day_no, part_no)) {
                     Some(x) => {
                         total_best += *x;
-                        print!("  {: >8.02}µs", x.as_nanos() as f64 / 1000.0);
+                        print!("  {: >10}", format_duration(*x));
                     }
                     None => {
                         print!("         n/a");
@@ -183,7 +193,7 @@ fn main() -> Result<()> {
             println!("");
         }
         println!("");
-        println!("Total: {}µs", total_best.as_nanos() as f64 / 1000.0);
+        println!("Total: {}", format_duration(total_best));
         return Ok(());
     }
     let which: usize = which.parse()?;
@@ -194,7 +204,7 @@ fn main() -> Result<()> {
     let res = f();
     let elapsed = tic.elapsed();
     println!("Result: {:?}", res);
-    println!("Computed in {}µs", elapsed.as_nanos() as f64 / 1000.0);
+    println!("Computed in {}", format_duration(elapsed));
 
     // day01::solve_a()?;
     // day02::solve_a()?;
