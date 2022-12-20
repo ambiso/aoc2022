@@ -206,6 +206,6 @@ mod test {
 
     #[test]
     fn test_b() {
-        assert_eq!(solve_a().unwrap(), 1585632183915);
+        assert_eq!(solve_a().unwrap(), 31740);
     }
 }
