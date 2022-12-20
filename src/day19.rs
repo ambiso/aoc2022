@@ -1,4 +1,4 @@
-use std::{collections::HashMap};
+use std::collections::HashMap;
 
 use crate::{error::Result, util::read_string};
 use lazy_static::lazy_static;
@@ -161,7 +161,12 @@ fn solve_internal(
                 ))
             }
         }
-        if bp.0.iter().zip(can_buy.iter()).any(|(cost, can_buy)| !can_buy && will_be_buyable(*cost, machines)) {
+        if bp
+            .0
+            .iter()
+            .zip(can_buy.iter())
+            .any(|(cost, can_buy)| !can_buy && will_be_buyable(*cost, machines))
+        {
             // if we cannot buy all machines we might be able to buy in the future, we might want to do nothing
             best = best.max(solve_internal(
                 bp,
@@ -178,7 +183,10 @@ fn solve_internal(
 }
 
 fn will_be_buyable(cost: Cost, machines: Machines) -> bool {
-    cost.0.iter().zip(machines.0.iter()).all(|(&cost, &income)| cost == 0 || income > 0)
+    cost.0
+        .iter()
+        .zip(machines.0.iter())
+        .all(|(&cost, &income)| cost == 0 || income > 0)
 }
 
 pub fn solve_a() -> Result<i64> {
@@ -192,7 +200,9 @@ pub fn solve_a() -> Result<i64> {
 pub fn solve_b() -> Result<i64> {
     let i = parse_input()?;
     let i = &i[0..3.min(i.len())];
-    Ok(i.par_iter().map(|bp| dbg!(solve_bp(bp, 32))).product::<i64>())
+    Ok(i.par_iter()
+        .map(|bp| dbg!(solve_bp(bp, 32)))
+        .product::<i64>())
 }
 
 #[cfg(test)]

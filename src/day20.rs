@@ -1,4 +1,4 @@
-use std::collections::{VecDeque};
+use std::collections::VecDeque;
 
 use crate::{error::Result, util::read_string};
 
@@ -15,7 +15,7 @@ fn solve(m: i64, n: i64) -> Result<i64> {
         for i in 0..input.len() {
             let p = mixed.iter().position(|x| x.0 == i).unwrap();
             let mut j = p as i64;
-            let mut off = mixed[p].1 % (input.len()-1) as i64;
+            let mut off = mixed[p].1 % (input.len() - 1) as i64;
             while off != 0 {
                 let new_j = (j + off.signum()).rem_euclid(mixed.len() as i64);
                 mixed.swap(j as usize, new_j as usize);
@@ -27,7 +27,10 @@ fn solve(m: i64, n: i64) -> Result<i64> {
 
     let idx = mixed.iter().position(|x| (*x).1 == 0).unwrap();
 
-    let s = [1000, 2000, 3000].iter().map(|&off| mixed[(idx + off) % mixed.len()].1 as i64).sum::<i64>();
+    let s = [1000, 2000, 3000]
+        .iter()
+        .map(|&off| mixed[(idx + off) % mixed.len()].1 as i64)
+        .sum::<i64>();
 
     Ok(s)
 }
