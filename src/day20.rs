@@ -48,11 +48,11 @@ mod test {
 
     #[test]
     fn test_a() {
-        assert_eq!(solve_a().unwrap(), 1382);
+        assert_eq!(solve_a().unwrap(), 17490);
     }
 
     #[test]
     fn test_b() {
-        assert_eq!(solve_a().unwrap(), 31740);
+        assert_eq!(solve_a().unwrap(), 1632917375836);
     }
 }
