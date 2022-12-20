@@ -200,9 +200,7 @@ pub fn solve_a() -> Result<i64> {
 pub fn solve_b() -> Result<i64> {
     let i = parse_input()?;
     let i = &i[0..3.min(i.len())];
-    Ok(i.par_iter()
-        .map(|bp| solve_bp(bp, 32))
-        .product::<i64>())
+    Ok(i.par_iter().map(|bp| solve_bp(bp, 32)).product::<i64>())
 }
 
 #[cfg(test)]

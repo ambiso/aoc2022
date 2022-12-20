@@ -31,12 +31,12 @@ mod day20;
 mod error;
 mod util;
 
-use util::format_duration;
 use std::hint::black_box;
 use std::{
     fmt::Debug,
     time::{Duration, Instant},
 };
+use util::format_duration;
 
 use crate::error::Result;
 
@@ -141,7 +141,8 @@ fn main() -> Result<()> {
                     elapsed += single_sample;
                     samples += 1;
 
-                    let sample_chunk = 1.max((duration_per_test.as_nanos() / single_sample.as_nanos() / 10) as u32);
+                    let sample_chunk = 1
+                        .max((duration_per_test.as_nanos() / single_sample.as_nanos() / 10) as u32);
                     while elapsed < duration_per_test {
                         let tic = Instant::now();
                         for _ in 0..sample_chunk {

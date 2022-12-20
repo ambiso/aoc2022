@@ -1,5 +1,3 @@
-use std::collections::VecDeque;
-
 use crate::{error::Result, util::read_string};
 
 fn parse_input() -> Result<Vec<i64>> {
@@ -8,14 +6,17 @@ fn parse_input() -> Result<Vec<i64>> {
 }
 
 fn solve(m: i64, n: i64) -> Result<i64> {
-    let input = parse_input()?;
-    let mut mixed = VecDeque::from_iter(input.iter().map(|x| *x * m).enumerate());
+    let mut input = parse_input()?;
+    input.iter_mut().for_each(|x| {
+        *x *= m;
+    });
+    let mut mixed = Vec::from_iter(0..input.len());
 
     for _ in 0..n {
         for i in 0..input.len() {
-            let p = mixed.iter().position(|x| x.0 == i).unwrap();
+            let p = mixed.iter().position(|x| *x == i).unwrap();
             let mut j = p as i64;
-            let mut off = mixed[p].1 % (input.len() - 1) as i64;
+            let mut off = input[mixed[p]] % (input.len() - 1) as i64;
 
             let alt = if off >= 0 {
                 -(input.len() as i64 - off.abs() - 1)
@@ -34,11 +35,11 @@ fn solve(m: i64, n: i64) -> Result<i64> {
         }
     }
 
-    let idx = mixed.iter().position(|x| (*x).1 == 0).unwrap();
+    let idx = mixed.iter().position(|x| input[*x] == 0).unwrap();
 
     let s = [1000, 2000, 3000]
         .iter()
-        .map(|&off| mixed[(idx + off) % mixed.len()].1 as i64)
+        .map(|&off| input[mixed[(idx + off) % mixed.len()]] as i64)
         .sum::<i64>();
 
     Ok(s)
