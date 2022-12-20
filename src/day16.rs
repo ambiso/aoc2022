@@ -4,7 +4,15 @@ use crate::error::Result;
 
 fn solve(graph: Vec<Vec<usize>>, node_values: Vec<i64>, node: usize, players: i64) -> i64 {
     let mut cache = HashMap::new();
-    solve_internal(&mut cache, &graph, node, node, if players > 0 { 26 } else { 30}, node_values, players)
+    solve_internal(
+        &mut cache,
+        &graph,
+        node,
+        node,
+        if players > 0 { 26 } else { 30 },
+        node_values,
+        players,
+    )
 }
 
 fn solve_internal(
@@ -18,7 +26,15 @@ fn solve_internal(
 ) -> i64 {
     if time_left == 0 {
         return if players > 0 {
-            solve_internal(cache, graph, initial_node, initial_node, 26, node_values, players-1)
+            solve_internal(
+                cache,
+                graph,
+                initial_node,
+                initial_node,
+                26,
+                node_values,
+                players - 1,
+            )
         } else {
             0
         };
@@ -45,8 +61,15 @@ fn solve_internal(
             let mut node_values_prime = node_values.clone();
             node_values_prime[node] = 0;
             max_val = max_val.max(
-                solve_internal(cache, graph, initial_node, node, time_left - 1, node_values_prime, players)
-                    + node_values[node] * (time_left - 1),
+                solve_internal(
+                    cache,
+                    graph,
+                    initial_node,
+                    node,
+                    time_left - 1,
+                    node_values_prime,
+                    players,
+                ) + node_values[node] * (time_left - 1),
             );
         }
 

@@ -26,6 +26,7 @@ mod day15;
 mod day16;
 mod day17;
 mod day18;
+mod day19;
 mod error;
 mod util;
 
@@ -98,6 +99,7 @@ fn main() -> Result<()> {
         vec![dynfns!(day16::solve_a), dynfns!(day16::solve_b)],
         vec![dynfns!(day17::solve_a), dynfns!(day17::solve_b)],
         vec![dynfns!(day18::solve_a), dynfns!(day18::solve_b)],
+        vec![dynfns!(day19::solve_a), dynfns!(day19::solve_b)],
     ];
 
     let mut args = std::env::args();
@@ -183,9 +185,9 @@ fn main() -> Result<()> {
         return Ok(());
     }
     let which: usize = which.parse()?;
-    let which_sub: usize = args.next().unwrap_or("0".to_string()).parse()?;
+    let which_sub: usize = args.next().unwrap_or("1".to_string()).parse()?;
 
-    let (_, f) = solutions[which - 1][which_sub].iter().nth(0).unwrap();
+    let (_, f) = solutions[which - 1][which_sub - 1].iter().nth(0).unwrap();
     let tic = Instant::now();
     let res = f();
     let elapsed = tic.elapsed();
