@@ -28,6 +28,8 @@ mod day17;
 mod day18;
 mod day19;
 mod day20;
+mod day21;
+mod day22;
 mod error;
 mod util;
 
@@ -103,6 +105,8 @@ fn main() -> Result<()> {
         vec![dynfns!(day18::solve_a), dynfns!(day18::solve_b)],
         vec![dynfns!(day19::solve_a), dynfns!(day19::solve_b)],
         vec![dynfns!(day20::solve_a), dynfns!(day20::solve_b)],
+        vec![dynfns!(day21::solve_a), dynfns!(day21::solve_b)],
+        vec![dynfns!(day22::solve_a), dynfns!(day22::solve_b)],
     ];
 
     let mut args = std::env::args();
