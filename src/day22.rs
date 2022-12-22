@@ -48,7 +48,7 @@ pub fn solve_a() -> Result<i64> {
         match i {
             Instruction::Step(n) => {
                 let d = dirs[dir as usize];
-                for j in 0..*n {
+                for _ in 0..*n {
                     let new_p = [
                         (p[0] + d[0]).rem_euclid(map[0].len() as i32),
                         (p[1] + d[1]).rem_euclid(map.len() as i32),
