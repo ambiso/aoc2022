@@ -3,6 +3,7 @@
         "backlinks",
         "Deque",
         "dynfns",
+        "hashgrid",
         "infty",
         "signum"
     ]
