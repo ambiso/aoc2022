@@ -80,6 +80,7 @@ fn find_var(map: &HashMap<&[u8], Op>, k: &[u8]) -> Option<Direction> {
     }
 }
 
+#[allow(unused)]
 fn print_eq<'a>(visited: &mut HashSet<&'a [u8]>, map: &HashMap<&'a [u8], Op<'a>>, k: &'a [u8]) {
     if visited.contains(&k) {
         return;

@@ -88,5 +88,63 @@ pub fn solve_a() -> Result<i64> {
 }
 
 pub fn solve_b() -> Result<i64> {
+    let s = std::fs::read("inputs/day22x")?;
+    let mut map = Vec::new();
+
+    let mut lines = s.split(|x| *x == '\n' as u8);
+    for l in &mut lines {
+        map.push(Vec::from(l));
+        if l.len() == 0 {
+            break;
+        }
+    }
+
+    let max_len = map.iter().map(|x| x.len()).max().unwrap();
+
+    for l in &mut map {
+        l.extend(vec![' ' as u8; max_len - l.len()]);
+    }
+
+    // let mut p = [
+    //     map[0].iter().position(|x| *x == '.' as u8).unwrap() as i32,
+    //     0,
+    // ];
+
+    // extract faces
+    let mut block_size = map
+        .iter()
+        .filter_map(|x| {
+            x.split(|x| *x != ' ' as u8)
+                .map(|x| x.len())
+                .filter(|x| *x > 0)
+                .min()
+        })
+        .min()
+        .unwrap();
+    for y in 0..map.len() {
+        let mut run_len = 0;
+        for x in 0..map[y].len() {
+            if map[y][x] == ' ' as u8 {
+                run_len += 1;
+            } else {
+                if run_len > 0 {
+                    block_size = block_size.min(run_len);
+                }
+                run_len = 0;
+            }
+        }
+    }
+
+    // check each permutation
+
     Ok(0)
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_a() {
+        assert_eq!(solve_a().unwrap(), 1428);
+    }
 }
