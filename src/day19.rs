@@ -197,6 +197,7 @@ pub fn solve_a() -> Result<i64> {
         .map(|(i, v)| (i + 1) as i64 * v)
         .sum::<i64>())
 }
+
 pub fn solve_b() -> Result<i64> {
     let i = parse_input()?;
     let i = &i[0..3.min(i.len())];

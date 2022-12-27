@@ -112,7 +112,7 @@ fn main() -> Result<()> {
         vec![dynfns!(day22::solve_a), dynfns!(day22::solve_b)],
         vec![dynfns!(day23::solve_a), dynfns!(day23::solve_b)],
         vec![dynfns!(day24::solve_a), dynfns!(day24::solve_b)],
-        vec![dynfns!(day25::solve_a), ],
+        vec![dynfns!(day25::solve_a)],
     ];
 
     let mut args = std::env::args();
@@ -198,7 +198,17 @@ fn main() -> Result<()> {
                 match results.get(&(day_no, part_no)) {
                     Some(x) => {
                         total_best += *x;
-                        print!("  \x1b[{}m{: >10}\x1b[0m", if *x <= lower_quartile { 32 } else if *x >= upper_quartile { 91 } else { 93 }, format_duration(*x));
+                        print!(
+                            "  \x1b[{}m{: >10}\x1b[0m",
+                            if *x <= lower_quartile {
+                                32
+                            } else if *x >= upper_quartile {
+                                91
+                            } else {
+                                93
+                            },
+                            format_duration(*x)
+                        );
                     }
                     None => {
                         print!("         n/a");
