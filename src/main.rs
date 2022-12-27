@@ -112,7 +112,7 @@ fn main() -> Result<()> {
         vec![dynfns!(day22::solve_a), dynfns!(day22::solve_b)],
         vec![dynfns!(day23::solve_a), dynfns!(day23::solve_b)],
         vec![dynfns!(day24::solve_a), dynfns!(day24::solve_b)],
-        vec![dynfns!(day25::solve_a), dynfns!(day25::solve_b)],
+        vec![dynfns!(day25::solve_a), ],
     ];
 
     let mut args = std::env::args();
@@ -186,6 +186,10 @@ fn main() -> Result<()> {
         println!("");
         println!("Day     Part 1      Part 2");
 
+        let mut times = results.values().copied().collect::<Vec<_>>();
+        times.sort();
+        let lower_quartile = times[times.len() / 4];
+        let upper_quartile = times[times.len() * 3 / 4];
         let mut total_best = Duration::ZERO;
         for i in which.iter() {
             let day_no = i + 1;
@@ -194,7 +198,7 @@ fn main() -> Result<()> {
                 match results.get(&(day_no, part_no)) {
                     Some(x) => {
                         total_best += *x;
-                        print!("  {: >10}", format_duration(*x));
+                        print!("  \x1b[{}m{: >10}\x1b[0m", if *x <= lower_quartile { 32 } else if *x >= upper_quartile { 91 } else { 93 }, format_duration(*x));
                     }
                     None => {
                         print!("         n/a");

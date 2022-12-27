@@ -62,10 +62,6 @@ pub fn solve_a() -> Result<String> {
     Ok(fmt_base(s))
 }
 
-pub fn solve_b() -> Result<i64> {
-    Ok(0)
-}
-
 #[cfg(test)]
 mod test {
     use super::*;
